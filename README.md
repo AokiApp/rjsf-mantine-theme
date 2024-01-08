@@ -2,6 +2,17 @@
 
 This package provides a Mantine theme for the React JSON Schema Form (rjsf) library.
 
+## Demo
+
+We have a playgroud where you can see the theme in action:
+
+```bash
+npm install
+npm run build
+cd packages/playground
+npm run start
+```
+
 ## Installation
 
 You can install the package:
@@ -42,6 +53,8 @@ import { Theme as MantineTheme } from '@aokiapp/rjsf-mantine-theme';
 
 const Form = withTheme(MantineTheme);
 ```
+
+For usage of RJSF, please refer the [official documentation](https://rjsf-team.github.io/react-jsonschema-form/docs/).
 
 ## Credits
 
