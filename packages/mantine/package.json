@@ -1,5 +1,5 @@
 {
-  "name": "@rjsf/mantine",
+  "name": "@aokiapp/rjsf-mantine-theme",
   "version": "5.15.1",
   "main": "./dist/index.js",
   "module": "./lib/index.js",
@@ -14,7 +14,7 @@
     "build:ts": "tsc -b",
     "build:cjs": "esbuild ./src/index.ts --bundle --outfile=dist/index.js --sourcemap --packages=external --format=cjs",
     "build:esm": "esbuild ./src/index.ts --bundle --outfile=dist/mantine.esm.js --sourcemap --packages=external --format=esm",
-    "build:umd": "rollup dist/mantine.esm.js --format=umd --file=dist/mantine.umd.js --name=@rjsf/mantine",
+    "build:umd": "rollup dist/mantine.esm.js --format=umd --file=dist/mantine.umd.js --name=@aokiapp/rjsf-mantine-theme",
     "build": "npm run build:ts && npm run build:cjs && npm run build:esm && npm run build:umd",
     "cs-check": "prettier -l \"{src,test}/**/*.ts?(x)\"",
     "cs-format": "prettier \"{src,test}/**/*.ts?(x)\" --write",
@@ -29,7 +29,7 @@
     ]
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=20"
   },
   "peerDependencies": {
     "@rjsf/core": "^5.15.x",

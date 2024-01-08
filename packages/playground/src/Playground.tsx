@@ -1,6 +1,6 @@
 import { Grid, Group, Select, Stack, Switch, Textarea, Title } from '@mantine/core';
 import { IChangeEvent } from '@rjsf/core';
-import MantineForm from '@rjsf/mantine';
+import MantineForm from '@aokiapp/rjsf-mantine-theme';
 import CoreForm from '@rjsf/core';
 import validator from '@rjsf/validator-ajv6';
 import { useEffect, useState } from 'react';

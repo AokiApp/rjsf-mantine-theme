@@ -20,11 +20,5 @@
     "jsx": "react-jsx",
     "types": ["vite/client"]
   },
-  "include": ["src"],
-  "references": [
-    { "path": "../core" },
-    { "path": "../utils" },
-    { "path": "../validator-ajv6" },
-    { "path": "../validator-ajv8" }
-  ]
+  "include": ["src"]
 }

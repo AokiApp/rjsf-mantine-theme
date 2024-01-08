@@ -7,7 +7,7 @@
 <br />
 <p align="center">
 
-  <h3 align="center">@rjsf/mantine</h3>
+  <h3 align="center">@aokiapp/rjsf-mantine-theme</h3>
 
   <p align="center">
   Mantine theme for <a href="https://github.com/rjsf-team/react-jsonschema-form/"><code>react-jsonschema-form</code></a>.
@@ -62,32 +62,32 @@ Mantine theme for `react-jsonschema-form`.
 For npm:
 
 ```sh
-npm i @tabler/icons-react @mantine/core @mantine/hooks @rjsf/mantine
+npm i @tabler/icons-react @mantine/core @mantine/hooks @aokiapp/rjsf-mantine-theme
 ```
 
 For yarn:
 
 ```sh
-yarn add @tabler/icons-react @mantine/core @mantine/hooks @rjsf/mantine
+yarn add @tabler/icons-react @mantine/core @mantine/hooks @aokiapp/rjsf-mantine-theme
 ```
 
 For pnpm:
 
 ```sh
-pnpm add @tabler/icons-react @mantine/core @mantine/hooks @rjsf/mantine
+pnpm add @tabler/icons-react @mantine/core @mantine/hooks @aokiapp/rjsf-mantine-theme
 ```
 
 ## Usage
 
 ```js
-import Form from '@rjsf/mantine';
+import Form from '@aokiapp/rjsf-mantine-theme';
 ```
 
 or
 
 ```js
 import { withTheme } from '@rjsf/core';
-import { Theme as MantineUITheme } from '@rjsf/mantine';
+import { Theme as MantineUITheme } from '@aokiapp/rjsf-mantine-theme';
 
 // Make modifications to the theme with your own fields and widgets
 

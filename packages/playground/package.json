@@ -1,5 +1,5 @@
 {
-  "name": "@rjsf/playground",
+  "name": "@aokiapp/rjsf-mantine-playground",
   "version": "5.15.1",
   "description": "rjsf playground",
   "private": true,
@@ -27,7 +27,7 @@
   ],
   "engineStrict": false,
   "engines": {
-    "node": ">=14"
+    "node": ">=20"
   },
   "peerDependencies": {
     "react": "^18.2.0"
@@ -39,7 +39,7 @@
     "@mantine/dates": "^7.4.0",
     "dayjs": "^1.11.10",
     "@rjsf/core": "^5.15.1",
-    "@rjsf/mantine": "^5.15.1",
+    "@aokiapp/rjsf-mantine-theme": "^5.15.1",
     "@rjsf/utils": "^5.15.1",
     "@rjsf/validator-ajv6": "^5.15.1",
     "@rjsf/validator-ajv8": "^5.15.1",
