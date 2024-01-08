@@ -18,7 +18,7 @@ import { Checkbox } from '@mantine/core';
 export default function CheckboxWidget<
   T = any,
   S extends StrictRJSFSchema = RJSFSchema,
-  F extends FormContextType = any
+  F extends FormContextType = any,
 >(props: WidgetProps<T, S, F>) {
   const {
     id,
@@ -42,17 +42,17 @@ export default function CheckboxWidget<
   const required = schemaRequiresTrueValue<S>(schema);
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => onChange(event.target.checked),
-    [onChange]
+    [onChange],
   );
 
   const handleBlur = useCallback(
     (event: FocusEvent<HTMLInputElement>) => onBlur(id, event.target.checked),
-    [onBlur, id]
+    [onBlur, id],
   );
 
   const handleFocus = useCallback(
     (event: FocusEvent<HTMLInputElement>) => onFocus(id, event.target.checked),
-    [onFocus, id]
+    [onFocus, id],
   );
   const description = options.description ?? schema.description;
   return (

@@ -19,7 +19,7 @@ import { DatePickerInput } from '@mantine/dates';
 export default function MantineDateWidget<
   T = any,
   S extends StrictRJSFSchema = RJSFSchema,
-  F extends FormContextType = any
+  F extends FormContextType = any,
 >(props: WidgetProps<T, S, F>) {
   const {
     id,
@@ -44,7 +44,7 @@ export default function MantineDateWidget<
 
   const _onChange = useCallback(
     (value: Date | null) => onChange(value ? fromUtcTimeToRawDateStr(value) : undefined),
-    [onChange]
+    [onChange],
   );
   return (
     <DatePickerInput

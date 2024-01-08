@@ -1,5 +1,4 @@
 import {
-  localToUTC,
   FormContextType,
   RJSFSchema,
   StrictRJSFSchema,
@@ -19,7 +18,7 @@ import { DateTimePicker } from '@mantine/dates';
 export default function MantineDateTimeWidget<
   T = any,
   S extends StrictRJSFSchema = RJSFSchema,
-  F extends FormContextType = any
+  F extends FormContextType = any,
 >(props: WidgetProps<T, S, F>) {
   const {
     id,

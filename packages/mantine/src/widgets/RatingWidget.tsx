@@ -1,6 +1,5 @@
-import { Input, Rating, Slider } from '@mantine/core';
-import { FormContextType, RJSFSchema, StrictRJSFSchema, WidgetProps, getInputProps, labelValue } from '@rjsf/utils';
-import { cp } from 'fs';
+import { Input, Rating } from '@mantine/core';
+import { FormContextType, RJSFSchema, StrictRJSFSchema, WidgetProps, labelValue } from '@rjsf/utils';
 import { useCallback } from 'react';
 
 /** The `RangeWidget` component uses the `BaseInputTemplate` changing the type to `range` and wrapping the result
@@ -9,7 +8,7 @@ import { useCallback } from 'react';
  * @param props - The `WidgetProps` for this component
  */
 export default function RatingWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extends FormContextType = any>(
-  props: WidgetProps<T, S, F>
+  props: WidgetProps<T, S, F>,
 ) {
   const {
     id,
@@ -24,7 +23,6 @@ export default function RatingWidget<T = any, S extends StrictRJSFSchema = RJSFS
     autofocus,
     options,
     schema,
-    type,
     rawErrors = [],
   } = props;
 

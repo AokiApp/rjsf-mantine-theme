@@ -20,7 +20,7 @@ import { FocusEvent, useCallback } from 'react';
 export default function CheckboxesWidget<
   T = any,
   S extends StrictRJSFSchema = RJSFSchema,
-  F extends FormContextType = any
+  F extends FormContextType = any,
 >(props: WidgetProps<T, S, F>) {
   const {
     id,
@@ -46,13 +46,13 @@ export default function CheckboxesWidget<
   const handleBlur = useCallback(
     ({ target: { value } }: FocusEvent<HTMLInputElement>) =>
       onBlur(id, enumOptionsValueForIndex<S>(value, enumOptions, emptyValue)),
-    [onBlur, id]
+    [onBlur, id, enumOptions, emptyValue],
   );
 
   const handleFocus = useCallback(
     ({ target: { value } }: FocusEvent<HTMLInputElement>) =>
       onFocus(id, enumOptionsValueForIndex<S>(value, enumOptions, emptyValue)),
-    [onFocus, id]
+    [onFocus, id, enumOptions, emptyValue],
   );
 
   const description = options.description ?? schema.description;

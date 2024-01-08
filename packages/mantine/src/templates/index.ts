@@ -19,7 +19,7 @@ import FieldHelpTemplate from './FieldHelpTemplate';
 export function generateTemplates<
   T = any,
   S extends StrictRJSFSchema = RJSFSchema,
-  F extends FormContextType = any
+  F extends FormContextType = any,
 >(): Partial<TemplatesType<T, S, F>> {
   const ButtonTemplates = {
     SubmitButton,

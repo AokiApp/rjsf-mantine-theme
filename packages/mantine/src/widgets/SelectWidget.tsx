@@ -36,23 +36,23 @@ function SelectWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extend
 }: WidgetProps<T, S, F>) {
   const { enumOptions, enumDisabled, emptyValue: optEmptyVal } = options;
 
+  const selectedIndices = enumOptionsIndexForValue<S>(value, enumOptions, multiple);
+
   // Bypassing null check here because enumOptionsValueForIndex will falls into emptyValue if matching fails
   const handleFocus = useCallback(() => {
     return onFocus(id, enumOptionsValueForIndex<S>(selectedIndices!, enumOptions, optEmptyVal));
-  }, [onFocus, id, schema, multiple, options]);
+  }, [onFocus, id, selectedIndices, enumOptions, optEmptyVal]);
 
   const handleBlur = useCallback(() => {
     return onBlur(id, enumOptionsValueForIndex<S>(selectedIndices!, enumOptions, optEmptyVal));
-  }, [onBlur, id, schema, multiple, options]);
+  }, [onBlur, id, selectedIndices, enumOptions, optEmptyVal]);
 
   const handleChange = useCallback(
     (value: string | null | string[]) => {
       return onChange(enumOptionsValueForIndex<S>(value!, enumOptions, optEmptyVal));
     },
-    [onChange, schema, multiple, options]
+    [onChange, enumOptions, optEmptyVal],
   );
-
-  const selectedIndices = enumOptionsIndexForValue<S>(value, enumOptions, multiple);
 
   if (multiple) {
     return (

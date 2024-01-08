@@ -8,7 +8,7 @@ import { useCallback } from 'react';
  * @param props - The `WidgetProps` for this component
  */
 export default function RangeWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extends FormContextType = any>(
-  props: WidgetProps<T, S, F>
+  props: WidgetProps<T, S, F>,
 ) {
   const {
     id,
@@ -37,7 +37,7 @@ export default function RangeWidget<T = any, S extends StrictRJSFSchema = RJSFSc
 
   const _onChange = useCallback(
     (value: number) => onChange(value === 0 ? options.emptyValue : value),
-    [onChange, options]
+    [onChange, options],
   );
   const _onBlur = useCallback((value: number) => onBlur(id, value), [onBlur, id]);
   const description = options.description ?? schema.description;

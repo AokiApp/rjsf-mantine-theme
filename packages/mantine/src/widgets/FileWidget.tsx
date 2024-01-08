@@ -1,13 +1,4 @@
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEvent, createContext, useCallback, useContext, useMemo } from 'react';
 import { dataURItoBlob, FormContextType, getTemplate, RJSFSchema, StrictRJSFSchema, WidgetProps } from '@rjsf/utils';
 import { Badge, Card, Group, Text, Image, Box, AspectRatio, CloseButton } from '@mantine/core';
 import {
@@ -66,9 +57,8 @@ function processFiles(files: FileList) {
 
 const fileInfoCtx = createContext<{
   filesInfo: FileInfoType[];
-  set: Dispatch<SetStateAction<FileInfoType[]>>;
+  onRemove: (index: number) => void;
   preview: boolean;
-  onChange?: (value: any) => void;
 }>(null!);
 
 function FileInfoPreview({ fileInfo }: { fileInfo: FileInfoType }) {
@@ -147,7 +137,7 @@ function convertUnitPrefix(size: number) {
   return `${(size / Math.pow(1024, index)).toFixed(2)} ${prefixes[index]}`;
 }
 function FilesInfo() {
-  const { filesInfo, set, onChange } = useContext(fileInfoCtx);
+  const { filesInfo, onRemove } = useContext(fileInfoCtx);
 
   if (filesInfo.length === 0) {
     return null;
@@ -156,11 +146,7 @@ function FilesInfo() {
     <Group m={'sm'}>
       {filesInfo.map((fileInfo, key) => {
         const { name, size } = fileInfo;
-        const rmFile = () => {
-          const newFilesInfo = [...filesInfo];
-          newFilesInfo.splice(key, 1);
-          set(newFilesInfo);
-        };
+        const rmFile = () => onRemove(key);
         return (
           <Card key={key} shadow='sm' padding='xs' radius='md' w={200} withBorder>
             <Card.Section>
@@ -203,13 +189,10 @@ function extractFileInfo(dataURLs: string[]): FileInfoType[] {
  *  It is typically used with a string property with data-url format.
  */
 function FileWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extends FormContextType = any>(
-  props: WidgetProps<T, S, F>
+  props: WidgetProps<T, S, F>,
 ) {
   const { disabled, readonly, required, multiple, onChange, value, options, registry } = props;
   const BaseInputTemplate = getTemplate<'BaseInputTemplate', T, S, F>('BaseInputTemplate', registry, options);
-  const [filesInfo, setFilesInfo] = useState<FileInfoType[]>(() =>
-    Array.isArray(value) ? extractFileInfo(value) : extractFileInfo([value])
-  );
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -220,44 +203,41 @@ function FileWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extends 
       // This is because we don't pass `multiple` into the `BaseInputTemplate` anymore. Instead, we deal with the single
       // file in each event and concatenate them together ourselves
       processFiles(event.target.files).then((filesInfoEvent) => {
+        const newValue = filesInfoEvent.map((fileInfo) => fileInfo.dataURL);
         if (multiple) {
-          setFilesInfo(filesInfo.concat(filesInfoEvent[0]));
+          onChange(value.concat(newValue[0]));
         } else {
-          setFilesInfo(filesInfoEvent);
+          onChange(newValue[0]);
         }
       });
     },
-    [multiple, filesInfo]
+    [multiple, value, onChange],
   );
 
-  useEffect(() => {
-    // reacts the change of filesInfo
-    if (multiple) {
-      onChange(filesInfo.map((fileInfo) => fileInfo.dataURL));
-    } else {
-      onChange(filesInfo[0]?.dataURL);
-    }
-  }, [filesInfo, multiple, onChange]);
-
+  const filesInfo = useMemo(() => extractFileInfo(Array.isArray(value) ? value : [value]), [value]);
+  const rmFile = useCallback(
+    (index: number) => {
+      if (multiple) {
+        const newValue = value.filter((_: any, i: number) => i !== index);
+        onChange(newValue);
+      } else {
+        onChange(undefined);
+      }
+    },
+    [multiple, value, onChange],
+  );
   return (
     <div>
-      <BaseInputTemplate
-        {...props}
-        disabled={disabled || readonly}
-        type='file'
-        required={value ? false : required} // this turns off HTML required validation when a value exists
-        onChangeOverride={handleChange}
-        value=''
-        accept={options.accept ? String(options.accept) : undefined}
-      />
-      <fileInfoCtx.Provider
-        value={{
-          filesInfo,
-          set: setFilesInfo,
-          preview: options.filePreview ?? false,
-          onChange,
-        }}
-      >
+      <fileInfoCtx.Provider value={{ filesInfo, onRemove: rmFile, preview: options.filePreview ?? false }}>
+        <BaseInputTemplate
+          {...props}
+          disabled={disabled || readonly}
+          type='file'
+          required={value ? false : required} // this turns off HTML required validation when a value exists
+          onChangeOverride={handleChange}
+          value=''
+          accept={options.accept ? String(options.accept) : undefined}
+        />
         <FilesInfo />
       </fileInfoCtx.Provider>
     </div>
