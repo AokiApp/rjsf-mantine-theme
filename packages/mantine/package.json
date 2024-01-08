@@ -7,7 +7,8 @@
   "description": "Mantine theme, fields and widgets for react-jsonschema-form",
   "files": [
     "dist",
-    "lib"
+    "lib",
+    "README.md"
   ],
   "scripts": {
     "build:ts": "tsc -b",
@@ -64,7 +65,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rjsf-team/react-jsonschema-form.git"
+    "url": "git+https://github.com/AokiApp/rjsf-mantine-theme.git"
   },
   "license": "Apache-2.0"
 }
