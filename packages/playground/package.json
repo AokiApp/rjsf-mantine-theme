@@ -100,8 +100,5 @@
     "json-schema"
   ],
   "license": "Apache-2.0",
-  "homepage": "https://github.com/rjsf-team/react-jsonschema-form",
-  "publishConfig": {
-    "access": "public"
-  }
+  "homepage": "https://github.com/rjsf-team/react-jsonschema-form"
 }
