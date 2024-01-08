@@ -16,7 +16,9 @@ jest.spyOn(window, 'getComputedStyle').mockImplementation(() => {
 
 formTests(Form, {
   [TEXTAREA_CUSTOMIZE]: {
-    createNodeMock: (element) => {
+    // I don't know why this parameter type is not inferred correctly
+    // I set type explicitly based on the type acquired from VS Code
+    createNodeMock: (element: React.ReactElement<any, string | React.JSXElementConstructor<any>>) => {
       if (element.type === 'textarea') {
         // the `TextareaAutosize` code expects a ref for two textareas to exist, so use the feature of
         // react-test-renderer to create one
@@ -35,7 +37,9 @@ formTests(Form, {
     },
   },
   [SLIDER_CUSTOMIZE]: {
-    createNodeMock: (element) => {
+    // I don't know why this parameter type is not inferred correctly
+    // I set type explicitly based on the type acquired from VS Code
+    createNodeMock: (element: React.ReactElement<any, string | React.JSXElementConstructor<any>>) => {
       // the `Slider` code expects a ref for a span.root to exist, so use the feature of
       // react-test-renderer to create one
       // See: https://reactjs.org/docs/test-renderer.html#ideas

@@ -32,14 +32,19 @@
     "node": ">=20"
   },
   "peerDependencies": {
+    "@mantine/core": ">=7.4.0",
+    "@mantine/dates": ">=7.4.0",
+    "@mantine/hooks": ">=7.4.0",
     "@rjsf/core": "^5.15.x",
     "@rjsf/utils": "^5.15.x",
-    "react": ">=17",
-    "@mantine/core": ">=7.4.0",
-    "@mantine/hooks": ">=7.4.0",
-    "@mantine/dates": ">=7.4.0",
+    "@tabler/icons-react": ">=2.45.0",
     "dayjs": ">=1.11.10",
-    "@tabler/icons-react": ">=2.45.0"
+    "react": ">=17"
+  },
+  "devDependencies": {
+    "@rjsf/snapshot-tests": "^5.15.x",
+    "@types/react-test-renderer": "^18.0.7",
+    "react-test-renderer": "^18.2.0"
   },
   "publishConfig": {
     "access": "public"
