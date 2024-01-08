@@ -7,8 +7,7 @@
   "description": "Mantine theme, fields and widgets for react-jsonschema-form",
   "files": [
     "dist",
-    "lib",
-    "src"
+    "lib"
   ],
   "scripts": {
     "build:ts": "tsc -b",
