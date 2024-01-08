@@ -4,7 +4,24 @@
   "version": "0.0.1",
   "description": "Mantine theme for react-jsonschema-form",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "publish-repo": "lerna publish",
+    "changed": "lerna changed",
+    "test": "lerna run --concurrency 2 --stream test",
+    "test:update": "lerna run --concurrency 2 --stream test:update",
+    "lint": "eslint './packages/**/*.{ts,js,tsx,jsx}' --quiet",
+    "cs-check": "lerna run cs-check",
+    "cs-format": "lerna run cs-format",
+    "build": "lerna run --stream build",
+    "build-serial": "lerna run --concurrency 1 --stream build",
+    "start": "echo 'use \"npm run build\" from main directory and then \"npm start\" in the playground package'",
+    "format": "prettier --write .",
+    "format-check": "prettier --check .",
+    "bump-all-packages": "echo 'NOTE: Make sure to sanity check the playground locally before commiting changes' && npm update --save && npm install && npm run build && npm run test && npm run lint",
+    "bump-peer-deps": "node scripts/bump-peer-deps.js",
+    "refresh-node-modules": "rimraf packages/*/node_modules && rimraf node_modules && npm install",
+    "commit-package-changes": "git add package-lock.json packages/*/package*.json && cross-env CI=skipPrecommit git commit -m 'updated package*.json after versioning' && git push",
+    "post-versioning": "echo 'This will take a while...' && npm run bump-peer-deps && npm run refresh-node-modules && npm run commit-package-changes && npm run update-version-tags",
+    "update-version-tags": "git tag -f $(node scripts/get-version-tag.js) && git push -f origin $(node scripts/get-version-tag.js)"
   },
   "keywords": [],
   "author": "",
@@ -28,6 +45,7 @@
     "eslint-plugin-prettier": "^5.1.2",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "lerna": "^8.0.2",
     "prettier": "^3.1.1",
     "typescript": "^5.3.3"
   }
