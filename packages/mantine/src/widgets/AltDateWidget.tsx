@@ -5,13 +5,11 @@ import {
   toDateString,
   pad,
   DateObject,
-  type DateElementFormat,
   FormContextType,
   RJSFSchema,
   StrictRJSFSchema,
   TranslatableString,
   WidgetProps,
-  getDateElementProps,
 } from '@rjsf/utils';
 import { Button, Grid, Group, Stack } from '@mantine/core';
 
@@ -140,15 +138,38 @@ function AltDateWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F exten
     [disabled, readonly, onChange],
   );
 
+  // TODO: upcoming v5.15.3 will replace this function with the one from @rjsf/utils
+  //       for now, we rolled back to the old one
+  //       Please revert this rollback after upgrading to v5.15.3
+  function dateElementProps(
+    state: DateObject,
+    time: boolean,
+    yearsRange: [number, number] = [1900, new Date().getFullYear() + 2],
+  ) {
+    const { year, month, day, hour, minute, second } = state;
+    const data = [
+      {
+        type: 'year',
+        range: yearsRange,
+        value: year,
+      },
+      { type: 'month', range: [1, 12], value: month },
+      { type: 'day', range: [1, 31], value: day },
+    ] as { type: string; range: [number, number]; value: number | undefined }[];
+    if (time) {
+      data.push(
+        { type: 'hour', range: [0, 23], value: hour },
+        { type: 'minute', range: [0, 59], value: minute },
+        { type: 'second', range: [0, 59], value: second },
+      );
+    }
+    return data;
+  }
+
   return (
     <Stack>
       <Grid>
-        {getDateElementProps(
-          state,
-          time,
-          options.yearsRange as [number, number] | undefined,
-          options.format as DateElementFormat | undefined,
-        ).map((elemProps, i) => (
+        {dateElementProps(state, time, options.yearsRange as [number, number] | undefined).map((elemProps, i) => (
           <Grid.Col span={4} key={i}>
             <DateElement
               rootId={id}
