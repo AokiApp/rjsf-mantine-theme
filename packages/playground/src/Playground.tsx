@@ -1,6 +1,7 @@
 import { Grid, Group, Select, Stack, Switch, Textarea, Title } from '@mantine/core';
 import { IChangeEvent } from '@rjsf/core';
 import MantineForm from '@aokiapp/rjsf-mantine-theme';
+import MantineCorporateForm from '@aokiapp/rjsf-mantine-corporate';
 import CoreForm from '@rjsf/core';
 import validator from '@rjsf/validator-ajv6';
 import { useEffect, useState } from 'react';
@@ -130,6 +131,7 @@ export function Playground() {
 
   const themes = [
     { value: 'Mantine', label: 'Mantine' },
+    { value: 'MantineCorporate', label: 'Mantine Corporate' },
     { value: 'Core', label: 'Core' },
     // Add more themes here
   ];
@@ -138,6 +140,9 @@ export function Playground() {
   switch (theme) {
     case 'Core':
       FormToUse = CoreForm;
+      break;
+    case 'MantineCorporate':
+      FormToUse = MantineCorporateForm;
       break;
     case 'Mantine':
     default:

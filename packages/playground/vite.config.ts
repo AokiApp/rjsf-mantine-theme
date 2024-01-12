@@ -15,6 +15,7 @@ export default defineConfig({
     preserveSymlinks: true, // Fixes https://github.com/rjsf-team/react-jsonschema-form/issues/3228
     alias: {
       '@aokiapp/rjsf-mantine-theme': path.resolve(__dirname, '../mantine/src'),
+      '@aokiapp/rjsf-mantine-corporate': path.resolve(__dirname, '../mantine-corporate/src'),
     },
   },
 });

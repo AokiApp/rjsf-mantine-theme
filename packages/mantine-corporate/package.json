@@ -1,5 +1,5 @@
 {
-  "name": "@aokiapp/rjsf-mantine-theme",
+  "name": "@aokiapp/rjsf-mantine-corporate",
   "private": true,
   "version": "0.0.1",
   "main": "./dist/index.js",
