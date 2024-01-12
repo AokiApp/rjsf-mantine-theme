@@ -124,9 +124,11 @@ function FileInfoPreview({ fileInfo }: { fileInfo: FileInfoType }) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        flexDirection: 'column',
       }}
     >
       <IconComponent size={30} />
+      <Badge variant='outline'>{type}</Badge>
     </Box>
   );
 }
