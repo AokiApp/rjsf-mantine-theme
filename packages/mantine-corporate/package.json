@@ -1,0 +1,72 @@
+{
+  "name": "@aokiapp/rjsf-mantine-theme",
+  "private": true,
+  "version": "0.0.1",
+  "main": "./dist/index.js",
+  "module": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "description": "Corporational variant of theme, based on @aokiapp/rjsf-mantine-theme",
+  "files": [
+    "dist",
+    "lib"
+  ],
+  "scripts": {
+    "build:ts": "tsc -b",
+    "build:cjs": "esbuild ./src/index.ts --bundle --outfile=dist/index.js --sourcemap --packages=external --format=cjs",
+    "build:esm": "esbuild ./src/index.ts --bundle --outfile=dist/mantine.esm.js --sourcemap --packages=external --format=esm",
+    "build:umd": "rollup dist/mantine.esm.js --format=umd --file=dist/mantine.umd.js --name=@aokiapp/rjsf-mantine-theme",
+    "build": "npm run build:ts && npm run build:cjs && npm run build:esm && npm run build:umd",
+    "cs-check": "prettier -l \"{src,test}/**/*.ts?(x)\"",
+    "cs-format": "prettier \"{src,test}/**/*.ts?(x)\" --write",
+    "lint": "eslint src test",
+    "precommit": "lint-staged",
+    "test": "jest",
+    "test:update": "jest --u"
+  },
+  "lint-staged": {
+    "{src,test}/**/*.ts?(x)": [
+      "eslint --fix"
+    ]
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "peerDependencies": {
+    "@mantine/core": ">=7.4.0",
+    "@mantine/dates": ">=7.4.0",
+    "@mantine/hooks": ">=7.4.0",
+    "@rjsf/core": ">=5.16.1",
+    "@rjsf/utils": ">=5.16.1",
+    "@tabler/icons-react": ">=2.45.0",
+    "dayjs": ">=1.11.10",
+    "react": ">=17",
+    "@aokiapp/rjsf-mantine-theme": ">=0.0.1"
+  },
+  "devDependencies": {
+    "@rjsf/snapshot-tests": "^5.16.x",
+    "@types/react-test-renderer": "^18.0.7",
+    "react-test-renderer": "^18.2.0"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "author": "Yuki Aoki<me@aoki.app>",
+  "contributors": [],
+  "keywords": [
+    "react-jsonschema-form",
+    "jsonschema",
+    "json-schema",
+    "json",
+    "schema",
+    "form",
+    "react",
+    "material-ui 5",
+    "mantine",
+    "rjsf-mantine"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AokiApp/rjsf-mantine-theme.git"
+  },
+  "license": "Apache-2.0"
+}
