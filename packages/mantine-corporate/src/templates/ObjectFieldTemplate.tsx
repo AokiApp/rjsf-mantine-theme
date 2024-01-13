@@ -1,4 +1,5 @@
-import { Fieldset, Group, Box } from '@mantine/core';
+import { Fieldset, Group, Box, Collapse, Text, Stack } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import {
   FormContextType,
   ObjectFieldTemplatePropertyType,
@@ -32,64 +33,75 @@ export default function ObjectFieldTemplate<
     properties,
     readonly,
     registry,
-    required,
+    //required,
     schema,
     title,
     uiSchema,
   } = props;
-  const options = getUiOptions<T, S, F>(uiSchema);
-  const TitleFieldTemplate = getTemplate<'TitleFieldTemplate', T, S, F>('TitleFieldTemplate', registry, options);
-  const DescriptionFieldTemplate = getTemplate<'DescriptionFieldTemplate', T, S, F>(
-    'DescriptionFieldTemplate',
-    registry,
-    options,
-  );
+  //const options = getUiOptions<T, S, F>(uiSchema);
+  // const TitleFieldTemplate = getTemplate<'TitleFieldTemplate', T, S, F>('TitleFieldTemplate', registry, options);
+  // const DescriptionFieldTemplate = getTemplate<'DescriptionFieldTemplate', T, S, F>(
+  //   'DescriptionFieldTemplate',
+  //   registry,
+  //   options,
+  // );
   // Button templates are not overridden in the uiSchema
   const {
     ButtonTemplates: { AddButton },
   } = registry.templates;
 
+  const [opened, { toggle }] = useDisclosure(true);
+
   const legendNode = (
-    <Group gap='xs'>
+    <Group gap='xs' p='xs' onClick={toggle} bg='indigo' role='button' aria-describedby={descriptionId<T>(idSchema)}>
       {title && (
-        <TitleFieldTemplate
-          id={titleId<T>(idSchema)}
-          title={title}
-          required={required}
-          schema={schema}
-          uiSchema={uiSchema}
-          registry={registry}
-        />
+        // <TitleFieldTemplate
+        //   id={titleId<T>(idSchema)}
+        //   title={title}
+        //   required={required}
+        //   schema={schema}
+        //   uiSchema={uiSchema}
+        //   registry={registry}
+        // />
+        <Text size='sm' fw={500} id={titleId<T>(idSchema)} c='white' role='heading'>
+          {title}
+        </Text>
       )}
       {description && (
-        <DescriptionFieldTemplate
-          id={descriptionId<T>(idSchema)}
-          description={description}
-          schema={schema}
-          uiSchema={uiSchema}
-          registry={registry}
-        />
+        // <DescriptionFieldTemplate
+        //   id={descriptionId<T>(idSchema)}
+        //   description={description}
+        //   schema={schema}
+        //   uiSchema={uiSchema}
+        //   registry={registry}
+        // />
+        <Text size='xs' c='white' id={descriptionId<T>(idSchema)}>
+          {description}
+        </Text>
       )}
     </Group>
   );
   return (
-    <Fieldset
+    <Stack
       id={idSchema.$id}
-      legend={legendNode}
       style={{
         width: '100%',
       }}
+      role='group'
     >
-      <Box>{properties.map((prop: ObjectFieldTemplatePropertyType) => prop.content)}</Box>
-      {canExpand<T, S, F>(schema, uiSchema, formData) && (
-        <AddButton
-          className='object-property-expand'
-          onClick={onAddClick(schema)}
-          disabled={disabled || readonly}
-          uiSchema={uiSchema}
-          registry={registry}
-        />
-      )}
-    </Fieldset>
+      {legendNode}
+      <Collapse in={opened}>
+        <Box>{properties.map((prop: ObjectFieldTemplatePropertyType) => prop.content)}</Box>
+        {canExpand<T, S, F>(schema, uiSchema, formData) && (
+          <AddButton
+            className='object-property-expand'
+            onClick={onAddClick(schema)}
+            disabled={disabled || readonly}
+            uiSchema={uiSchema}
+            registry={registry}
+          />
+        )}
+      </Collapse>
+    </Stack>
   );
 }

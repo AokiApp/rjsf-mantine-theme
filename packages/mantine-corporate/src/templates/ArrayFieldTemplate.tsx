@@ -8,7 +8,7 @@ import {
   StrictRJSFSchema,
 } from '@rjsf/utils';
 
-import { Group, Fieldset } from '@mantine/core';
+import { Group, Box, Divider } from '@mantine/core';
 
 /** The `ArrayFieldTemplate` component is the template used to render all items in an array.
  *
@@ -77,22 +77,37 @@ export default function ArrayFieldTemplate<
       />
     </Group>
   );
+
+  let arrItems;
+  if (items && items.length > 0) {
+    arrItems = (
+      <>
+        <Divider my='xs' label={`${_title || '配列'} の先頭`} labelPosition='center' />
+        {items.map(({ key, ...itemProps }: ArrayFieldTemplateItemType<T, S, F>) => (
+          <ArrayFieldItemTemplate key={key} {...itemProps} />
+        ))}{' '}
+        <Divider my='xs' label={`${_title || '配列'} の末尾`} labelPosition='center' />
+      </>
+    );
+  } else {
+    arrItems = <Divider my='xs' label={`${_title || '配列'} は空です`} labelPosition='center' />;
+  }
+
   return (
-    <Fieldset
+    <Box
       id={idSchema.$id}
-      legend={legendNode}
       style={{
         width: '100%',
       }}
       className={className}
     >
-      {items &&
-        items.map(({ key, ...itemProps }: ArrayFieldTemplateItemType<T, S, F>) => (
-          <ArrayFieldItemTemplate key={key} {...itemProps} />
-        ))}
-      {canAdd && (
-        <AddButton onClick={onAddClick} disabled={disabled || readonly} uiSchema={uiSchema} registry={registry} />
-      )}
-    </Fieldset>
+      <Group gap='xs' justify='space-between'>
+        {legendNode}
+        {canAdd && (
+          <AddButton onClick={onAddClick} disabled={disabled || readonly} uiSchema={uiSchema} registry={registry} />
+        )}
+      </Group>
+      {arrItems}
+    </Box>
   );
 }

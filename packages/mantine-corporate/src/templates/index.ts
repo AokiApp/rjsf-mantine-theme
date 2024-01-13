@@ -1,6 +1,5 @@
 import { FormContextType, RJSFSchema, StrictRJSFSchema, TemplatesType } from '@rjsf/utils';
 
-import FieldErrorTemplate from './FieldErrorTemplate';
 import ErrorListTemplate from './ErrorListTemplate';
 import FieldTemplate from './FieldTemplate';
 import ObjectFieldTemplate from './ObjectFieldTemplate';
@@ -16,7 +15,6 @@ export function generateTemplates<
   return {
     ArrayFieldItemTemplate,
     ArrayFieldTemplate,
-    FieldErrorTemplate,
     ErrorListTemplate,
     FieldTemplate,
     ObjectFieldTemplate,
