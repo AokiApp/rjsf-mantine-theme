@@ -127,7 +127,7 @@ export function Playground() {
   // Preset area end
 
   // Theme area start
-  const [theme, setTheme] = useState('Mantine');
+  const [theme, setTheme] = useState('MantineCorporate');
 
   const themes = [
     { value: 'Mantine', label: 'Mantine' },
