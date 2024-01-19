@@ -25,6 +25,7 @@ export default function RatingWidget<T = any, S extends StrictRJSFSchema = RJSFS
     options,
     schema,
     rawErrors,
+    hideError,
   } = props;
 
   if (!id) {
@@ -48,7 +49,7 @@ export default function RatingWidget<T = any, S extends StrictRJSFSchema = RJSFS
       label={labelValue(label, hideLabel)}
       description={description}
       id={id}
-      error={createErrors<T>(rawErrors)}
+      error={createErrors<T>(rawErrors, hideError)}
       required={required}
       className='armt-widget-rating'
     >

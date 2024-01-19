@@ -36,5 +36,5 @@ export default function FieldErrorTemplate<
     return null;
   }
 
-  return createErrors<T>(props.errors, props.idSchema);
+  return createErrors<T>(props.errors, false, props.idSchema);
 }

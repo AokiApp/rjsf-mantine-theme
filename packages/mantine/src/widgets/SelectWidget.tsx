@@ -33,6 +33,7 @@ function SelectWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extend
   onChange,
   onBlur,
   onFocus,
+  hideError,
   placeholder,
 }: WidgetProps<T, S, F>) {
   const { enumOptions, enumDisabled, emptyValue: optEmptyVal } = options;
@@ -65,7 +66,7 @@ function SelectWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extend
         })}
         description={schema.description}
         disabled={disabled || readonly}
-        error={createErrors<T>(rawErrors)}
+        error={createErrors<T>(rawErrors, hideError)}
         label={labelValue(label, hideLabel, false)}
         autoFocus={autofocus}
         required={required}
@@ -91,7 +92,7 @@ function SelectWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extend
         })}
         description={schema.description}
         disabled={disabled || readonly}
-        error={createErrors<T>(rawErrors)}
+        error={createErrors<T>(rawErrors, hideError)}
         label={labelValue(label, hideLabel, false)}
         autoFocus={autofocus}
         required={required}
