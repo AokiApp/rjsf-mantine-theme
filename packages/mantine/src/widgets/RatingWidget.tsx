@@ -1,6 +1,7 @@
 import { Input, Rating } from '@mantine/core';
 import { FormContextType, RJSFSchema, StrictRJSFSchema, WidgetProps, labelValue } from '@rjsf/utils';
 import { useCallback } from 'react';
+import { createErrors } from '../utils/createErrors';
 
 /** The `RangeWidget` component uses the `BaseInputTemplate` changing the type to `range` and wrapping the result
  * in a div, with the value along side it.
@@ -23,7 +24,8 @@ export default function RatingWidget<T = any, S extends StrictRJSFSchema = RJSFS
     autofocus,
     options,
     schema,
-    rawErrors = [],
+    rawErrors,
+    hideError,
   } = props;
 
   if (!id) {
@@ -47,8 +49,9 @@ export default function RatingWidget<T = any, S extends StrictRJSFSchema = RJSFS
       label={labelValue(label, hideLabel)}
       description={description}
       id={id}
-      error={rawErrors.length > 0 ? rawErrors.map((error, i) => <span key={i}>{error}</span>) : undefined}
+      error={createErrors<T>(rawErrors, hideError)}
       required={required}
+      className='armt-widget-rating'
     >
       <Rating
         readOnly={disabled || readonly}

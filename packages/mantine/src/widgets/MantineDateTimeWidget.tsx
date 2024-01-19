@@ -9,6 +9,7 @@ import {
 import { useCallback } from 'react';
 
 import { DateTimePicker } from '@mantine/dates';
+import { createErrors } from '../utils/createErrors';
 
 /** The `DateTimeWidget` component uses the `BaseInputTemplate` changing the type to `datetime-local` and transforms
  * the value to/from utc using the appropriate utility functions.
@@ -32,7 +33,8 @@ export default function MantineDateTimeWidget<
     onChange,
     onChangeOverride,
     autofocus,
-    rawErrors = [],
+    rawErrors,
+    hideError,
   } = props;
 
   // TODO: options
@@ -52,8 +54,9 @@ export default function MantineDateTimeWidget<
       clearable={!required}
       disabled={disabled || readonly}
       autoFocus={autofocus}
-      error={rawErrors.length > 0 ? rawErrors.map((error, i) => <span key={i}>{error}</span>) : false}
+      error={createErrors<T>(rawErrors, hideError)}
       aria-describedby={ariaDescribedByIds<T>(id)}
+      className='armt-widget-datetime-mt'
     />
   );
 }

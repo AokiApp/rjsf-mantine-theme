@@ -49,8 +49,10 @@ export default function ObjectFieldTemplate<
     ButtonTemplates: { AddButton },
   } = registry.templates;
 
+  const classNames = options.classNames;
+
   const legendNode = (
-    <Group gap='xs'>
+    <Group gap='xs' className='armt-template-objectfield-legend'>
       {title && (
         <TitleFieldTemplate
           id={titleId<T>(idSchema)}
@@ -79,6 +81,7 @@ export default function ObjectFieldTemplate<
       style={{
         width: '100%',
       }}
+      className={`armt-template-objectfield ${classNames ?? ''}`}
     >
       <Box>{properties.map((prop: ObjectFieldTemplatePropertyType) => prop.content)}</Box>
       {canExpand<T, S, F>(schema, uiSchema, formData) && (

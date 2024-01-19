@@ -84,7 +84,7 @@ export default function ArrayFieldTemplate<
       style={{
         width: '100%',
       }}
-      className={className}
+      className={`armt-template-arrayfield ${className}`}
     >
       {items &&
         items.map(({ key, ...itemProps }: ArrayFieldTemplateItemType<T, S, F>) => (

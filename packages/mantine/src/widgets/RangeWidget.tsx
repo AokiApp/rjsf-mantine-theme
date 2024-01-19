@@ -1,6 +1,7 @@
 import { Input, Slider } from '@mantine/core';
 import { FormContextType, RJSFSchema, StrictRJSFSchema, WidgetProps, getInputProps, labelValue } from '@rjsf/utils';
 import { useCallback } from 'react';
+import { createErrors } from '../utils/createErrors';
 
 /** The `RangeWidget` component uses the `BaseInputTemplate` changing the type to `range` and wrapping the result
  * in a div, with the value along side it.
@@ -25,7 +26,8 @@ export default function RangeWidget<T = any, S extends StrictRJSFSchema = RJSFSc
     options,
     schema,
     type,
-    rawErrors = [],
+    rawErrors,
+    hideError,
   } = props;
 
   if (!id) {
@@ -46,8 +48,9 @@ export default function RangeWidget<T = any, S extends StrictRJSFSchema = RJSFSc
       label={labelValue(label, hideLabel)}
       description={description}
       id={id}
-      error={rawErrors.length > 0 ? rawErrors.map((error, i) => <span key={i}>{error}</span>) : undefined}
+      error={createErrors<T>(rawErrors, hideError)}
       required={required}
+      className='armt-widget-range'
     >
       <Slider
         disabled={disabled || readonly}

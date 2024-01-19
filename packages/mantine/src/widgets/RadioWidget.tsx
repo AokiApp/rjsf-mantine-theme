@@ -11,6 +11,7 @@ import {
 } from '@rjsf/utils';
 
 import { Group, Radio } from '@mantine/core';
+import { createErrors } from '../utils/createErrors';
 
 /** The `RadioWidget` is a widget for rendering a radio group.
  *  It is typically used with a string property constrained with enum options.
@@ -32,7 +33,8 @@ export default function RadioWidget<T = any, S extends StrictRJSFSchema = RJSFSc
     onBlur,
     onFocus,
     options,
-    rawErrors = [],
+    rawErrors,
+    hideError,
   } = props;
   const { enumOptions, enumDisabled, emptyValue } = options;
   const _onChange = (nextValue: any) => {
@@ -52,7 +54,8 @@ export default function RadioWidget<T = any, S extends StrictRJSFSchema = RJSFSc
       onChange={_onChange}
       onBlur={_onBlur}
       onFocus={_onFocus}
-      error={rawErrors.length > 0 ? rawErrors.map((error, i) => <span key={i}>{error}</span>) : false}
+      error={createErrors<T>(rawErrors, hideError)}
+      className='armt-widget-radio'
     >
       <Group>
         {enumOptions?.map((option, index) => {

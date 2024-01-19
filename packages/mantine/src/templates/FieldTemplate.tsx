@@ -17,7 +17,8 @@ export default function FieldTemplate<
   S extends StrictRJSFSchema = RJSFSchema,
   F extends FormContextType = any,
 >(props: FieldTemplateProps<T, S, F>) {
-  const { id, children, classNames, style, label, help, hidden, registry, schema, uiSchema, ...otherProps } = props;
+  const { id, children, classNames, style, label, help, hidden, registry, schema, uiSchema, errors, ...otherProps } =
+    props;
   const uiOptions = getUiOptions<T, S, F>(uiSchema);
   const WrapIfAdditionalTemplate = getTemplate<'WrapIfAdditionalTemplate', T, S, F>(
     'WrapIfAdditionalTemplate',
@@ -29,7 +30,7 @@ export default function FieldTemplate<
     return <div style={{ display: 'none' }}>{children}</div>;
   }
 
-  // TODO: If there is a field or template that don't support label or description, add exceptions here
+  // Conditions whether errors should be displayed or not is handled by the FieldErrorTemplate
   return (
     <WrapIfAdditionalTemplate
       classNames={classNames}
@@ -42,6 +43,7 @@ export default function FieldTemplate<
       {...otherProps}
     >
       {children}
+      {errors}
       {help}
     </WrapIfAdditionalTemplate>
   );

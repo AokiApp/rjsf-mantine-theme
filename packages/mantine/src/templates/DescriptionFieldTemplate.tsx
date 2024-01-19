@@ -15,7 +15,7 @@ export default function DescriptionFieldTemplate<
     return null;
   }
   return (
-    <Text size='xs' id={id} className='mantine-ui-description' c='gray'>
+    <Text size='xs' id={id} c='gray' className={`armt-template-description`}>
       {description}
     </Text>
   );

@@ -229,7 +229,7 @@ function FileWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extends 
     [multiple, value, onChange],
   );
   return (
-    <div>
+    <div className='armt-widget-file'>
       <fileInfoCtx.Provider value={{ filesInfo, onRemove: rmFile, preview: options.filePreview ?? false }}>
         <BaseInputTemplate
           {...props}
