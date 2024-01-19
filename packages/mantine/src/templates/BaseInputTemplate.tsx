@@ -11,6 +11,7 @@ import {
   RJSFSchema,
   StrictRJSFSchema,
 } from '@rjsf/utils';
+import { createErrors } from '../utils/createErrors';
 
 /** The `BaseInputTemplate` is the template to use to render the basic `<input>` component for the `core` theme.
  * It is used as the template for rendering many of the <input> based widgets that differ by `type` and callbacks only.
@@ -40,7 +41,9 @@ export default function BaseInputTemplate<
     options,
     schema,
     type,
-    rawErrors = [],
+    rawErrors,
+    className,
+    hideError,
   } = props;
 
   // Note: since React 15.2.0 we can't forward unknown element attributes, so we
@@ -82,11 +85,12 @@ export default function BaseInputTemplate<
         disabled={disabled || readonly}
         list={schema.examples ? examplesId<T>(id) : undefined}
         value={inputValue}
-        error={rawErrors.length > 0 ? rawErrors.map((error, i) => <span key={i}>{error}</span>) : false}
+        error={createErrors<T>(rawErrors, hideError)}
         onChange={onChangeOverride || _onChange}
         onBlur={_onBlur}
         onFocus={_onFocus}
         aria-describedby={ariaDescribedByIds<T>(id, !!schema.examples)}
+        className={`armt-widget-input ${className || ''}`}
       />
       {Array.isArray(schema.examples) && (
         <datalist id={examplesId<T>(id)}>

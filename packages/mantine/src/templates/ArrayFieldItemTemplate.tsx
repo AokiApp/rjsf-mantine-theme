@@ -12,6 +12,7 @@ export default function ArrayFieldItemTemplate<
 >(props: ArrayFieldTemplateItemType<T, S, F>) {
   const {
     children,
+    className,
     disabled,
     hasToolbar,
     hasCopy,
@@ -29,13 +30,13 @@ export default function ArrayFieldItemTemplate<
   const { CopyButton, MoveDownButton, MoveUpButton, RemoveButton } = registry.templates.ButtonTemplates;
 
   return (
-    <Box>
+    <Box className={`armt-template-arrayfielditem ${className}`}>
       {children}
       {hasToolbar && (hasMoveUp || hasMoveDown || hasRemove || hasCopy) && (
         <Group justify='flex-end'>
           {(hasMoveUp || hasMoveDown) && (
             <MoveUpButton
-              className='array-item-move-up'
+              className='armt-template-afit-move-up'
               disabled={disabled || readonly || !hasMoveUp}
               onClick={onReorderClick(index, index - 1)}
               uiSchema={uiSchema}
@@ -44,7 +45,7 @@ export default function ArrayFieldItemTemplate<
           )}
           {(hasMoveUp || hasMoveDown) && (
             <MoveDownButton
-              className='array-item-move-down'
+              className='armt-template-afit-move-down'
               disabled={disabled || readonly || !hasMoveDown}
               onClick={onReorderClick(index, index + 1)}
               uiSchema={uiSchema}
@@ -53,7 +54,7 @@ export default function ArrayFieldItemTemplate<
           )}
           {hasCopy && (
             <CopyButton
-              className='array-item-copy'
+              className='armt-template-afit-copy'
               disabled={disabled || readonly}
               onClick={onCopyIndexClick(index)}
               uiSchema={uiSchema}
@@ -62,7 +63,7 @@ export default function ArrayFieldItemTemplate<
           )}
           {hasRemove && (
             <RemoveButton
-              className='array-item-remove'
+              className='armt-template-afit-remove'
               disabled={disabled || readonly}
               onClick={onDropIndexClick(index)}
               uiSchema={uiSchema}

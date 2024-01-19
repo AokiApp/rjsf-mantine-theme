@@ -9,6 +9,7 @@ import {
 } from '@rjsf/utils';
 import { ChangeEvent, FocusEvent, useCallback } from 'react';
 import { Checkbox } from '@mantine/core';
+import { createErrors } from '../utils/createErrors';
 
 /** The `CheckBoxWidget` is a widget for rendering boolean properties.
  *  It is typically used to represent a boolean.
@@ -33,7 +34,8 @@ export default function CheckboxWidget<
     options,
     onFocus,
     schema,
-    rawErrors = [],
+    rawErrors,
+    hideError,
   } = props;
 
   // Because an unchecked checkbox will cause html5 validation to fail, only add
@@ -66,9 +68,10 @@ export default function CheckboxWidget<
       onChange={handleChange}
       onBlur={handleBlur}
       onFocus={handleFocus}
-      error={rawErrors.length > 0 ? rawErrors.map((error, i) => <span key={i}>{error}</span>) : undefined}
+      error={createErrors<T>(rawErrors, hideError)}
       aria-describedby={ariaDescribedByIds<T>(id)}
       checked={typeof value === 'undefined' ? false : value}
+      className='armt-widget-checkbox'
     />
   );
 }

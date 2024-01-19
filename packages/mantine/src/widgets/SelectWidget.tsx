@@ -10,6 +10,7 @@ import {
   WidgetProps,
 } from '@rjsf/utils';
 import { MultiSelect, Select } from '@mantine/core';
+import { createErrors } from '../utils/createErrors';
 
 /** The `SelectWidget` is a widget for rendering dropdowns.
  *  It is typically used with string properties constrained with enum options.
@@ -26,7 +27,7 @@ function SelectWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extend
   readonly,
   label,
   hideLabel,
-  rawErrors = [],
+  rawErrors,
   multiple = false,
   autofocus = false,
   onChange,
@@ -64,7 +65,7 @@ function SelectWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extend
         })}
         description={schema.description}
         disabled={disabled || readonly}
-        error={rawErrors.length > 0 ? rawErrors.map((error, i) => <span key={i}>{error}</span>) : false}
+        error={createErrors<T>(rawErrors)}
         label={labelValue(label, hideLabel, false)}
         autoFocus={autofocus}
         required={required}
@@ -75,6 +76,7 @@ function SelectWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extend
         onDropdownOpen={handleFocus}
         aria-describedby={ariaDescribedByIds<T>(id)}
         placeholder={placeholder}
+        className='armt-widget-select armt-widget-select-multiple'
       />
     );
   } else {
@@ -89,7 +91,7 @@ function SelectWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extend
         })}
         description={schema.description}
         disabled={disabled || readonly}
-        error={rawErrors.length > 0 ? rawErrors.map((error, i) => <span key={i}>{error}</span>) : false}
+        error={createErrors<T>(rawErrors)}
         label={labelValue(label, hideLabel, false)}
         autoFocus={autofocus}
         required={required}
@@ -100,6 +102,7 @@ function SelectWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extend
         onDropdownOpen={handleFocus}
         aria-describedby={ariaDescribedByIds<T>(id)}
         placeholder={placeholder}
+        className='armt-widget-select armt-widget-select-single'
       />
     );
   }

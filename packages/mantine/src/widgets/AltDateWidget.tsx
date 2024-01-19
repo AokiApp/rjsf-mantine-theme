@@ -91,6 +91,7 @@ function AltDateWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F exten
   onFocus,
   onChange,
   value,
+  className,
 }: WidgetProps<T, S, F>) {
   const { translateString } = registry;
   const [lastValue, setLastValue] = useState(value);
@@ -141,7 +142,7 @@ function AltDateWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F exten
   );
 
   return (
-    <Stack>
+    <Stack className={`armt-widget-altdate ${className ?? ''}`} gap='xs'>
       <Grid>
         {getDateElementProps(
           state,

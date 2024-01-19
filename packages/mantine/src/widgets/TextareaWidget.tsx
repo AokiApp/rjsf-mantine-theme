@@ -8,6 +8,7 @@ import {
   WidgetProps,
 } from '@rjsf/utils';
 import { Textarea } from '@mantine/core';
+import { createErrors } from '../utils/createErrors';
 
 /** The `TextareaWidget` is a widget for rendering input fields as textarea.
  *
@@ -32,7 +33,8 @@ export default function TextareaWidget<
     onFocus,
     onChange,
     options,
-    rawErrors = [],
+    rawErrors,
+    hideError,
   } = props;
 
   const _onChange = ({ target: { value } }: ChangeEvent<HTMLTextAreaElement>) =>
@@ -44,13 +46,14 @@ export default function TextareaWidget<
       id={id}
       key={id}
       name={id}
+      className='armt-widget-textarea'
       label={labelValue(label || undefined, hideLabel, false)}
       placeholder={placeholder}
       autoFocus={autofocus}
       required={required}
       disabled={disabled || readonly}
       value={value || ''}
-      error={rawErrors.length > 0}
+      error={createErrors<T>(rawErrors, hideError)}
       rows={options.rows || 5}
       onChange={_onChange}
       onBlur={_onBlur}

@@ -44,7 +44,7 @@ export default function WrapIfAdditionalTemplate<
 
   if (!additional) {
     return (
-      <div className={classNames} style={style}>
+      <div className={`${classNames ?? ''} armt-template-wia`} style={style}>
         {children}
       </div>
     );
@@ -52,8 +52,9 @@ export default function WrapIfAdditionalTemplate<
 
   const handleBlur = ({ target }: FocusEvent<HTMLInputElement>) => onKeyChange(target.value);
 
+  // the reason that wraps the children in a div is to match the result of additional=false
   return (
-    <div className={classNames} style={style} key={`${id}-key`}>
+    <div className={`${classNames ?? ''} armt-template-wia`} style={style} key={`${id}-key`}>
       <Group align='center'>
         <TextInput // key input
           label={keyLabel}

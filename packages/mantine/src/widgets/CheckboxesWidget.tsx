@@ -11,6 +11,7 @@ import {
 } from '@rjsf/utils';
 import { Box, Checkbox } from '@mantine/core';
 import { FocusEvent, useCallback } from 'react';
+import { createErrors } from '../utils/createErrors';
 
 /** The `CheckboxesWidget` is a widget for rendering checkbox groups.
  *  It is typically used to represent an array of enums.
@@ -36,7 +37,8 @@ export default function CheckboxesWidget<
     onFocus,
     schema,
     required,
-    rawErrors = [],
+    rawErrors,
+    hideError,
   } = props;
 
   const checkboxesValues = Array.isArray(value) ? value : [value];
@@ -65,7 +67,7 @@ export default function CheckboxesWidget<
     <Checkbox.Group
       label={labelValue(label, hideLabel, false)}
       description={description}
-      error={rawErrors.length > 0 ? rawErrors.map((error, i) => <span key={i}>{error}</span>) : false}
+      error={createErrors<T>(rawErrors, hideError)}
       onChange={_onChange}
       onBlur={handleBlur}
       onFocus={handleFocus}
@@ -73,6 +75,7 @@ export default function CheckboxesWidget<
       id={id}
       required={required}
       autoFocus={autofocus}
+      className='armt-widget-checkboxes'
     >
       <Box
         style={{

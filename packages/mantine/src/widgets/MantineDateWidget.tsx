@@ -10,6 +10,7 @@ import {
 import { useCallback } from 'react';
 
 import { DatePickerInput } from '@mantine/dates';
+import { createErrors } from '../utils/createErrors';
 
 /** The `DateWidget` component uses the `BaseInputTemplate` changing the type to `date` and transforms
  * the value to undefined when it is falsy during the `onChange` handling.
@@ -33,8 +34,9 @@ export default function MantineDateWidget<
     onChange,
     onChangeOverride,
     autofocus,
-    rawErrors = [],
+    rawErrors,
     uiSchema,
+    hideError,
   } = props;
 
   const options = getUiOptions<T, S, F>(uiSchema);
@@ -58,9 +60,10 @@ export default function MantineDateWidget<
       clearable={!required}
       disabled={disabled || readonly}
       autoFocus={autofocus}
-      error={rawErrors.length > 0 ? rawErrors.map((error, i) => <span key={i}>{error}</span>) : false}
+      error={createErrors<T>(rawErrors, hideError)}
       aria-describedby={ariaDescribedByIds<T>(id)}
       {...(options.props as Record<string, unknown>)}
+      className='armt-widget-date-mt'
     />
   );
 }
