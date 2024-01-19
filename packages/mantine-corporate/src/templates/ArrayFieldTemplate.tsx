@@ -99,7 +99,7 @@ export default function ArrayFieldTemplate<
       style={{
         width: '100%',
       }}
-      className={className}
+      className={`armt-template-arrayfield ${className}`}
     >
       <Group gap='xs' justify='space-between'>
         {legendNode}

@@ -29,7 +29,6 @@ export default function FieldTemplate<
     return <div style={{ display: 'none' }}>{children}</div>;
   }
 
-  // TODO: If there is a field or template that don't support label or description, add exceptions here
   return (
     <WrapIfAdditionalTemplate
       classNames={classNames}

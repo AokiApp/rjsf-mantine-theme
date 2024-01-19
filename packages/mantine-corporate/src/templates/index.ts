@@ -4,7 +4,6 @@ import ErrorListTemplate from './ErrorListTemplate';
 import FieldTemplate from './FieldTemplate';
 import ObjectFieldTemplate from './ObjectFieldTemplate';
 import TitleFieldTemplate from './TitleFieldTemplate';
-import ArrayFieldItemTemplate from './ArrayFieldItemTemplate';
 import ArrayFieldTemplate from './ArrayFieldTemplate';
 
 export function generateTemplates<
@@ -13,7 +12,6 @@ export function generateTemplates<
   F extends FormContextType = any,
 >(): Partial<TemplatesType<T, S, F>> {
   return {
-    ArrayFieldItemTemplate,
     ArrayFieldTemplate,
     ErrorListTemplate,
     FieldTemplate,

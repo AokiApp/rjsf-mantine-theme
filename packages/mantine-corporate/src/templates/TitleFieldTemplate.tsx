@@ -10,12 +10,13 @@ const REQUIRED_FIELD_SYMBOL = '*';
 export default function TitleField<T = any, S extends StrictRJSFSchema = RJSFSchema, F extends FormContextType = any>({
   title,
   required,
+  id,
 }: TitleFieldProps<T, S, F>) {
   if (!title) {
     return null;
   }
   return (
-    <Title order={5}>
+    <Title order={5} className='armt-template-title' id={id}>
       {title}
       {required && <span className='required'>{REQUIRED_FIELD_SYMBOL}</span>}
     </Title>

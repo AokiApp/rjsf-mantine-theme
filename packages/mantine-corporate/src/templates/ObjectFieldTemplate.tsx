@@ -1,4 +1,4 @@
-import { Fieldset, Group, Box, Collapse, Text, Stack } from '@mantine/core';
+import { Group, Box, Collapse, Text, Stack } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import {
   FormContextType,
@@ -8,8 +8,6 @@ import {
   StrictRJSFSchema,
   canExpand,
   descriptionId,
-  getTemplate,
-  getUiOptions,
   titleId,
 } from '@rjsf/utils';
 
