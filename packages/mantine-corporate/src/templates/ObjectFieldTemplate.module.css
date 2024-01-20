@@ -1,5 +1,6 @@
 .legend {
   padding: 4px;
+  flex-wrap: nowrap;
   & svg {
     transition: transform 200ms ease;
   }
@@ -9,10 +10,14 @@
     transform: rotate(180deg);
   }
 }
+.labels {
+  flex-wrap: nowrap;
+}
 .root {
   border-radius: 8px;
   padding: 8px;
   user-select: none;
+  width: 100%;
   
   border: 1px solid transparent;
 

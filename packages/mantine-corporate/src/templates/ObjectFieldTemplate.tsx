@@ -61,8 +61,8 @@ export default function ObjectFieldTemplate<
   const containError = errorSchema && Object.keys(errorSchema).length > 0;
 
   const legendNode = showLegend ? (
-    <Group onClick={toggle} className={classes.legend} justify='space-between'>
-      <Group>
+    <Group onClick={toggle} className={classes.legend} justify='space-between' wrap='nowrap'>
+      <Group className={classes.labels} gap='xs'>
         {title && (
           <TitleFieldTemplate
             id={titleId<T>(idSchema)}
@@ -89,9 +89,6 @@ export default function ObjectFieldTemplate<
   return (
     <Stack
       id={idSchema.$id}
-      style={{
-        width: '100%',
-      }}
       role='group'
       gap={'xs'}
       className={`armt-template-objectfield ${classNames ?? ''} ${classes.root} ${containError && classes.error}`}
