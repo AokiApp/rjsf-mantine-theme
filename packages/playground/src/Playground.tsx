@@ -1,18 +1,18 @@
-import { Grid, Group, Select, Stack, Switch, Textarea, Title } from '@mantine/core';
+import { Grid, Group, Select, Stack, Switch, JsonInput, Title } from '@mantine/core';
 import { IChangeEvent } from '@rjsf/core';
 import MantineForm from '@aokiapp/rjsf-mantine-theme';
 import MantineCorporateForm from '@aokiapp/rjsf-mantine-corporate';
 import CoreForm from '@rjsf/core';
 import validator from '@rjsf/validator-ajv6';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { samples } from './samples';
 import { Sample } from './samples/Sample';
-import GeoPosition from './samples/components/GeoPosition';
-import SpecialInput from './samples/components/SpecialInput';
+import GeoPosition from './samples/made-by-rjsf-team/components/GeoPosition';
+import SpecialInput from './samples/made-by-rjsf-team/components/SpecialInput';
 
 export function Playground() {
   // JSON Schema area start
-  // textarea->schemaStr->(filter unparsed)->schemaSnapshot->Form
+  // JsonInput->schemaStr->(filter unparsed)->schemaSnapshot->Form
   const [schemaSnapshot, setSchemaSnapshot] = useState({});
   const [schemaStr, setSchemaStr] = useState(() => JSON.stringify(schemaSnapshot, null, 2));
   const [schemaFailed, setSchemaFailed] = useState(false);
@@ -24,20 +24,24 @@ export function Playground() {
       setSchemaFailed(true);
     }
   }, [schemaStr]);
-  const jsonSchemaForm = (
-    <Textarea
-      label='JSON Schema'
-      onChange={(e) => setSchemaStr(e.currentTarget.value)}
-      value={schemaStr}
-      autosize
-      error={schemaFailed ? 'Invalid JSON' : false}
-      maxRows={20}
-    />
+  const jsonSchemaForm = useMemo(
+    () => (
+      <JsonInput
+        formatOnBlur
+        label='JSON Schema'
+        onChange={(e) => setSchemaStr(e || '{}')}
+        value={schemaStr}
+        autosize
+        error={schemaFailed ? 'Invalid JSON' : false}
+        maxRows={20}
+      />
+    ),
+    [schemaStr, schemaFailed]
   );
   // JSON Schema area end
 
   // UI Schema area start
-  // textarea->uiSchemaStr->(filter unparsed)->uiSchemaSnapshot->Form
+  // JsonInput->uiSchemaStr->(filter unparsed)->uiSchemaSnapshot->Form
   const [uiSchemaSnapshot, setUiSchemaSnapshot] = useState({});
   const [uiSchemaStr, setUiSchemaStr] = useState(() => JSON.stringify(uiSchemaSnapshot, null, 2));
   const [uiSchemaFailed, setUiSchemaFailed] = useState(false);
@@ -49,21 +53,26 @@ export function Playground() {
       setUiSchemaFailed(true);
     }
   }, [uiSchemaStr]);
-  const uiSchemaForm = (
-    <Textarea
-      label='UI Schema'
-      onChange={(e) => setUiSchemaStr(e.currentTarget.value)}
-      value={uiSchemaStr}
-      autosize
-      error={uiSchemaFailed ? 'Invalid JSON' : false}
-      maxRows={20}
-    />
+
+  const uiSchemaForm = useMemo(
+    () => (
+      <JsonInput
+        formatOnBlur
+        label='UI Schema'
+        onChange={(e) => setUiSchemaStr(e || '{}')}
+        value={uiSchemaStr}
+        autosize
+        error={uiSchemaFailed ? 'Invalid JSON' : false}
+        maxRows={20}
+      />
+    ),
+    [uiSchemaStr, uiSchemaFailed]
   );
   // UI Schema area end
 
   // Form data area start
-  // textarea->formDataStr->(filter unparsed)->formDataSnapshot->
-  // Form->(onChange)->formDataStr->textarea->formDataStr->(always parsed)
+  // JsonInput->formDataStr->(filter unparsed)->formDataSnapshot->
+  // Form->(onChange)->formDataStr->JsonInput->formDataStr->(always parsed)
   // ->formDataSnapshot->loop
   const [formDataSnapshot, setFormDataSnapshot] = useState({});
   const [formDataStr, setFormDataStr] = useState(() => JSON.stringify(formDataSnapshot, null, 2));
@@ -76,15 +85,19 @@ export function Playground() {
       setFormDataFailed(true);
     }
   }, [formDataStr]);
-  const formData = (
-    <Textarea
-      label='Form Data'
-      onChange={(e) => setFormDataStr(e.currentTarget.value)}
-      value={formDataStr}
-      autosize
-      error={formDataFailed ? 'Invalid JSON' : false}
-      maxRows={20}
-    />
+  const formData = useMemo(
+    () => (
+      <JsonInput
+        formatOnBlur
+        label='Form Data'
+        onChange={(e) => setFormDataStr(e || '{}')}
+        value={formDataStr}
+        autosize
+        error={formDataFailed ? 'Invalid JSON' : false}
+        maxRows={20}
+      />
+    ),
+    [formDataStr, formDataFailed]
   );
   // Form data area end
 
@@ -93,15 +106,24 @@ export function Playground() {
     key: string;
     value: Sample;
   } | null>(null);
-  const data = Object.keys(samples).map((key) => ({
-    value: key,
-    label: key,
-  }));
+  const sampleList: Sample[] = [];
+  const sectionList = Object.keys(samples).map((key) => {
+    return {
+      group: key,
+      items: Object.keys(samples[key as keyof typeof samples]).map((k) => {
+        sampleList.push(samples[key as keyof typeof samples][k]);
+        return {
+          value: (sampleList.length - 1).toString(),
+          label: k,
+        };
+      }),
+    };
+  });
   const changeHdl = (e: string | null) => {
     if (e === null) {
       return;
     }
-    const sample = samples[e];
+    const sample = sampleList[parseInt(e)];
     setPresetPropValue({
       key: e,
       value: sample,
@@ -116,12 +138,13 @@ export function Playground() {
     <Select
       label='Preset'
       description='Select here to insert'
-      data={data}
+      data={sectionList}
       value={presetPropValue?.key}
       onChange={changeHdl}
       allowDeselect
       style={{ flexGrow: 1 }}
       searchable
+      maxDropdownHeight={1000}
     />
   );
   // Preset area end

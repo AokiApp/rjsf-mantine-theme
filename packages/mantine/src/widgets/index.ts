@@ -12,6 +12,7 @@ import AltDateWidget from './AltDateWidget';
 import RangeWidget from './RangeWidget';
 import RatingWidget from './RatingWidget';
 import FileWidget from './FileWidget';
+import UpDownWidget from './UpDownWidget';
 
 export function generateWidgets<
   T = any,
@@ -31,6 +32,7 @@ export function generateWidgets<
     RangeWidget,
     RatingWidget,
     FileWidget,
+    UpDownWidget,
   };
 }
 
