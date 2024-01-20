@@ -200,6 +200,11 @@ export function Playground() {
     schema: schemaSnapshot,
     uiSchema: uiSchemaSnapshot,
     formData: formDataSnapshot,
+    fields: {
+      geo: GeoPosition,
+      '/schemas/specialString': SpecialInput,
+      ...presetPropValue?.value?.fields,
+    },
   };
   const formRendered = (
     <FormToUse
@@ -208,10 +213,6 @@ export function Playground() {
       liveValidate={liveValidate}
       onChange={(e: IChangeEvent) => {
         setFormDataStr(JSON.stringify(e.formData, null, 2));
-      }}
-      fields={{
-        geo: GeoPosition,
-        '/schemas/specialString': SpecialInput,
       }}
       validator={validator}
     />
