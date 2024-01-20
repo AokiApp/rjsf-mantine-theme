@@ -1,0 +1,11 @@
+.rowDir {
+  & :global(.armt-template-objectfield-item) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}
+.fullWidth {
+  width: 100%;
+}

@@ -256,7 +256,6 @@ function FileWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extends 
     accept = undefined;
   }
   const description = options.description || schema.description;
-  console.debug(props);
   return (
     <div>
       <fileInfoCtx.Provider value={{ filesInfo, onRemove: rmFile, preview: options.filePreview ?? true }}>

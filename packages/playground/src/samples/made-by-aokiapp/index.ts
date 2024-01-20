@@ -1,6 +1,6 @@
 import { Sample } from '../Sample';
 import cms from './cms';
-import customerInfo from './customer-info';
+import customerInfo from './hsema';
 import files from './files';
 import k8spodspec from './k8spodspec';
 

@@ -2,7 +2,7 @@
 import { Sample } from '../Sample';
 import { Type } from '@sinclair/typebox';
 import { NamedNumberEnum, NamedStringEnum, ObjectIfThenElse } from './utils';
-import { FieldProps } from '@rjsf/utils';
+import { FieldProps, UiSchema } from '@rjsf/utils';
 import { getDefaultRegistry } from '@rjsf/core';
 
 const userIdentInfo = Type.Object(
@@ -83,10 +83,25 @@ const schema = Type.Object(
           title: '申請送達日時',
           description: '申請情報の作成日時',
           format: 'date-time',
+          readOnly: true,
         }),
         updatedAt: Type.String({
           title: '最終更新日時',
           description: '申請情報の最終更新日時',
+          format: 'date-time',
+          readOnly: true,
+        }),
+      },
+      {
+        title: '管理情報',
+        description: '出願に対する管理上の事項です。',
+      }
+    ),
+    acceptanceInfo: Type.Object(
+      {
+        acceptedAt: Type.String({
+          title: '受理日時',
+          description: '受理日時',
           format: 'date-time',
         }),
         status: NamedStringEnum(
@@ -105,8 +120,8 @@ const schema = Type.Object(
         ),
       },
       {
-        title: '管理情報',
-        description: '出願に対する管理上の事項です。',
+        title: '受付情報',
+        description: '受付に関する情報です。',
       }
     ),
     examinee: Type.Object(
@@ -147,7 +162,7 @@ const schema = Type.Object(
       }),
       {
         title: '申請者情報',
-        description: '本申請書を提出する方の情報を入力してください。',
+        description: '本申請書を提出し、連絡や書類の返送を受けるための連絡先を入力してください',
       }
     ),
 
@@ -170,6 +185,7 @@ const schema = Type.Object(
       }),
       {
         title: '保護者情報',
+        description: '保護者または成年後見人の情報を入力してください',
       }
     ),
 
@@ -256,10 +272,12 @@ const schema = Type.Object(
     ),
     handicap: Type.Object(
       {
-        isMild: Type.Boolean({
-          title: '軽症者特例',
-          description: '軽症者特例を適用しますか?',
-        }),
+        isMild: Type.Optional(
+          Type.Boolean({
+            title: '軽症者特例',
+            description: '軽症者特例を適用しますか?',
+          })
+        ),
         vision: Type.Optional(
           NamedStringEnum(
             {
@@ -286,39 +304,47 @@ const schema = Type.Object(
             }
           )
         ),
-        physical: NamedStringEnum(
-          {
-            checkAnsExt: 'チェック回答+延長',
-            checkAns: 'チェック回答',
-            agentExt: '代理回答+延長',
-            agent: '代理回答',
-            other: 'その他',
-          },
-          {
-            title: '肢体不自由',
-          }
+        physical: Type.Optional(
+          NamedStringEnum(
+            {
+              checkAnsExt: 'チェック回答+延長',
+              checkAns: 'チェック回答',
+              agentExt: '代理回答+延長',
+              agent: '代理回答',
+              other: 'その他',
+            },
+            {
+              title: '肢体不自由',
+            }
+          )
         ),
-        developmental: NamedStringEnum(
-          {
-            other: 'その他',
-          },
-          {
-            title: '発達障害',
-          }
+        developmental: Type.Optional(
+          NamedStringEnum(
+            {
+              other: 'その他',
+            },
+            {
+              title: '発達障害',
+            }
+          )
         ),
         needPreExamHelp: Type.Boolean({
           title: '試験前の配慮',
           description: '試験前に配慮が必要ですか?',
           default: true,
         }),
-        description: Type.String({
-          title: '障害の特徴に関する自由記述欄',
-          description: '障害について記入してください。',
-        }),
-        helps: Type.String({
-          title: '配慮内容に関する自由記述欄',
-          description: '配慮内容について記入してください。',
-        }),
+        description: Type.Optional(
+          Type.String({
+            title: '障害の特徴に関する自由記述欄',
+            description: '障害について記入してください。',
+          })
+        ),
+        helps: Type.Optional(
+          Type.String({
+            title: '配慮内容に関する自由記述欄',
+            description: '配慮内容について記入してください。',
+          })
+        ),
       },
       {
         title: '配慮の有無',
@@ -416,18 +442,74 @@ function UserIdentInfoField(props: FieldProps) {
     ...props,
     uiSchema: {
       ...props.uiSchema,
-      'ui:classNames': 'dirRow',
+      'ui:classNames': classes.rowDir,
       address: {
-        'ui:classNames': 'fullwidth',
+        'ui:classNames': classes.fullWidth,
       },
     },
   };
   return <ObjectField {...newProps} />;
 }
 
+import classes from './hsema.module.css';
+
+const uiSchema: UiSchema = {
+  basicInfo: {
+    'ui:classNames': classes.rowDir,
+    id: {
+      'ui:classNames': classes.fullWidth,
+    },
+  },
+  acceptanceInfo: {
+    'ui:classNames': classes.rowDir,
+  },
+  examinee: {
+    'ui:classNames': classes.rowDir,
+  },
+  applicant: {
+    'ui:widget': 'radio',
+  },
+  applicationInfo: {
+    'ui:classNames': classes.rowDir,
+    school: {
+      'ui:classNames': classes.fullWidth,
+    },
+  },
+  examinationInfo: {
+    subjQuestions: {
+      items: {
+        'ui:classNames': classes.rowDir,
+      },
+    },
+  },
+  handicap: {
+    description: {
+      'ui:widget': 'textarea',
+    },
+    helps: {
+      'ui:widget': 'textarea',
+    },
+  },
+  fee: {
+    'ui:classNames': classes.rowDir,
+    exception: {
+      'ui:widget': 'checkboxes',
+    },
+  },
+  memo: {
+    items: {
+      items: {
+        content: {
+          'ui:widget': 'textarea',
+        },
+      },
+    },
+  },
+};
+
 const examples: Sample = {
   schema: schema,
-  uiSchema: {},
+  uiSchema,
   fields: { '#/definitions/userIdentInfo': UserIdentInfoField },
 };
 
