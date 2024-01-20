@@ -1,0 +1,20 @@
+.legend {
+  background-color: #1e48bbd0;
+  padding: 0.5rem;
+  border-radius: 4px;
+
+  & svg {
+    transition: transform 200ms ease;
+  }
+
+  /* if the element next to this has the attribute aria-hidden... */
+  &:has(+ [aria-hidden="true"]) svg {
+    transform: rotate(180deg);
+  }
+}
+.title {
+  color: #fff;
+}
+.description {
+  color: #fff;
+}
