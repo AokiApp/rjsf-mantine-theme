@@ -3,7 +3,7 @@ import { IChangeEvent } from '@rjsf/core';
 import MantineForm from '@aokiapp/rjsf-mantine-theme';
 import CoreForm from '@rjsf/core';
 import validator from '@rjsf/validator-ajv6';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { samples } from './samples';
 import { Sample } from './samples/Sample';
 import GeoPosition from './samples/made-by-rjsf-team/components/GeoPosition';
@@ -23,16 +23,19 @@ export function Playground() {
       setSchemaFailed(true);
     }
   }, [schemaStr]);
-  const jsonSchemaForm = (
-    <JsonInput
-      formatOnBlur
-      label='JSON Schema'
-      onChange={(e) => setSchemaStr(e || '{}')}
-      value={schemaStr}
-      autosize
-      error={schemaFailed ? 'Invalid JSON' : false}
-      maxRows={20}
-    />
+  const jsonSchemaForm = useMemo(
+    () => (
+      <JsonInput
+        formatOnBlur
+        label='JSON Schema'
+        onChange={(e) => setSchemaStr(e || '{}')}
+        value={schemaStr}
+        autosize
+        error={schemaFailed ? 'Invalid JSON' : false}
+        maxRows={20}
+      />
+    ),
+    [schemaStr, schemaFailed]
   );
   // JSON Schema area end
 
@@ -49,16 +52,20 @@ export function Playground() {
       setUiSchemaFailed(true);
     }
   }, [uiSchemaStr]);
-  const uiSchemaForm = (
-    <JsonInput
-      formatOnBlur
-      label='UI Schema'
-      onChange={(e) => setUiSchemaStr(e || '{}')}
-      value={uiSchemaStr}
-      autosize
-      error={uiSchemaFailed ? 'Invalid JSON' : false}
-      maxRows={20}
-    />
+
+  const uiSchemaForm = useMemo(
+    () => (
+      <JsonInput
+        formatOnBlur
+        label='UI Schema'
+        onChange={(e) => setUiSchemaStr(e || '{}')}
+        value={uiSchemaStr}
+        autosize
+        error={uiSchemaFailed ? 'Invalid JSON' : false}
+        maxRows={20}
+      />
+    ),
+    [uiSchemaStr, uiSchemaFailed]
   );
   // UI Schema area end
 
@@ -77,16 +84,19 @@ export function Playground() {
       setFormDataFailed(true);
     }
   }, [formDataStr]);
-  const formData = (
-    <JsonInput
-      formatOnBlur
-      label='Form Data'
-      onChange={(e) => setFormDataStr(e || '{}')}
-      value={formDataStr}
-      autosize
-      error={formDataFailed ? 'Invalid JSON' : false}
-      maxRows={20}
-    />
+  const formData = useMemo(
+    () => (
+      <JsonInput
+        formatOnBlur
+        label='Form Data'
+        onChange={(e) => setFormDataStr(e || '{}')}
+        value={formDataStr}
+        autosize
+        error={formDataFailed ? 'Invalid JSON' : false}
+        maxRows={20}
+      />
+    ),
+    [formDataStr, formDataFailed]
   );
   // Form data area end
 
