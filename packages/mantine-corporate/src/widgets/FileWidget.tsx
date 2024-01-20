@@ -1,6 +1,16 @@
-import { ChangeEvent, createContext, useCallback, useContext, useMemo } from 'react';
-import { dataURItoBlob, FormContextType, getTemplate, RJSFSchema, StrictRJSFSchema, WidgetProps } from '@rjsf/utils';
-import { Badge, Card, Group, Text, Image, Box, AspectRatio, CloseButton } from '@mantine/core';
+import { createContext, useCallback, useContext, useMemo } from 'react';
+import {
+  dataURItoBlob,
+  FormContextType,
+  getTemplate,
+  RJSFSchema,
+  StrictRJSFSchema,
+  WidgetProps,
+  descriptionId,
+} from '@rjsf/utils';
+import { Badge, Card, Group, Text, Image, Box, AspectRatio, CloseButton, Stack } from '@mantine/core';
+import { Dropzone, FileWithPath } from '@mantine/dropzone';
+import '@mantine/dropzone/styles.css';
 import {
   IconCode,
   IconFile,
@@ -51,8 +61,8 @@ function processFile(file: File): Promise<FileInfoType> {
   });
 }
 
-function processFiles(files: FileList) {
-  return Promise.all(Array.from(files).map(processFile));
+function processFiles(files: FileWithPath[]) {
+  return Promise.all(files.map(processFile));
 }
 
 const fileInfoCtx = createContext<{
@@ -193,21 +203,28 @@ function extractFileInfo(dataURLs: string[]): FileInfoType[] {
 function FileWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extends FormContextType = any>(
   props: WidgetProps<T, S, F>,
 ) {
-  const { disabled, readonly, required, multiple, onChange, value, options, registry } = props;
-  const BaseInputTemplate = getTemplate<'BaseInputTemplate', T, S, F>('BaseInputTemplate', registry, options);
+  const { disabled, readonly, required, multiple, onChange, value, options, registry, schema, hideLabel, label, id } =
+    props;
+  const TitleFieldTemplate = getTemplate<'TitleFieldTemplate', T, S, F>('TitleFieldTemplate', registry, options);
+  const DescriptionFieldTemplate = getTemplate<'DescriptionFieldTemplate', T, S, F>(
+    'DescriptionFieldTemplate',
+    registry,
+    options,
+  );
 
   const handleChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      if (!event.target.files) {
+    (files: FileWithPath[]) => {
+      if (!files || files.length === 0) {
         return;
       }
       // Due to variances in themes, dealing with multiple files for the array case now happens one file at a time.
       // This is because we don't pass `multiple` into the `BaseInputTemplate` anymore. Instead, we deal with the single
       // file in each event and concatenate them together ourselves
-      processFiles(event.target.files).then((filesInfoEvent) => {
+      processFiles(files).then((filesInfoEvent) => {
         const newValue = filesInfoEvent.map((fileInfo) => fileInfo.dataURL);
         if (multiple) {
-          onChange(value.concat(newValue[0]));
+          // filter out null, somewhat null is contained
+          onChange(value.filter((e: any) => !!e).concat(newValue[0]));
         } else {
           onChange(newValue[0]);
         }
@@ -228,18 +245,49 @@ function FileWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extends 
     },
     [multiple, value, onChange],
   );
+
+  // accept is not string[] and Record<string, string[]
+  let accept = options.accept ?? undefined;
+
+  // accept must be string[] or Record<string, string[]>
+  // if not, it will be error
+  if (accept && !Array.isArray(accept) && typeof accept !== 'object') {
+    console.warn('accept must be string[] or Record<string, string[]>. ignoring...');
+    accept = undefined;
+  }
+  const description = options.description || schema.description;
+  console.debug(props);
   return (
     <div>
-      <fileInfoCtx.Provider value={{ filesInfo, onRemove: rmFile, preview: options.filePreview ?? false }}>
-        <BaseInputTemplate
-          {...props}
+      <fileInfoCtx.Provider value={{ filesInfo, onRemove: rmFile, preview: options.filePreview ?? true }}>
+        {label && !hideLabel && (
+          <TitleFieldTemplate id={id} title={label} required={required} schema={schema} registry={registry} />
+        )}
+        {description && !hideLabel && (
+          <DescriptionFieldTemplate
+            id={descriptionId<T>(id)}
+            description={props.description}
+            registry={registry}
+            schema={schema}
+          />
+        )}
+        <Dropzone
+          accept={accept as string[] | Record<string, string[]>}
+          onDrop={handleChange}
           disabled={disabled || readonly}
-          type='file'
-          required={value ? false : required} // this turns off HTML required validation when a value exists
-          onChangeOverride={handleChange}
-          value=''
-          accept={options.accept ? String(options.accept) : undefined}
-        />
+          maxSize={
+            // @ts-expect-error strict type check rarely need for this easy case, as long as the schema is correct
+            options.maxSize || schema.maxLength || schema.items?.maxLength
+          }
+          multiple={multiple}
+        >
+          <Stack gap='0' align='center'>
+            <Text size='xl' fw={700}>
+              ファイルをドロップしてください
+            </Text>
+            <Text size='sm'>または、ファイルを選択する</Text>
+          </Stack>
+        </Dropzone>
         <FilesInfo />
       </fileInfoCtx.Provider>
     </div>

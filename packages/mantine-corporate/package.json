@@ -35,6 +35,7 @@
     "@mantine/core": ">=7.4.0",
     "@mantine/dates": ">=7.4.0",
     "@mantine/hooks": ">=7.4.0",
+    "@mantine/dropzone": ">=7.4.0",
     "@rjsf/core": ">=5.16.1",
     "@rjsf/utils": ">=5.16.1",
     "@tabler/icons-react": ">=2.45.0",
