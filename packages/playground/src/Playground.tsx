@@ -1,4 +1,4 @@
-import { Grid, Group, Select, Stack, Switch, Textarea, Title } from '@mantine/core';
+import { Grid, Group, Select, Stack, Switch, JsonInput, Title } from '@mantine/core';
 import { IChangeEvent } from '@rjsf/core';
 import MantineForm from '@aokiapp/rjsf-mantine-theme';
 import CoreForm from '@rjsf/core';
@@ -11,7 +11,7 @@ import SpecialInput from './samples/components/SpecialInput';
 
 export function Playground() {
   // JSON Schema area start
-  // textarea->schemaStr->(filter unparsed)->schemaSnapshot->Form
+  // JsonInput->schemaStr->(filter unparsed)->schemaSnapshot->Form
   const [schemaSnapshot, setSchemaSnapshot] = useState({});
   const [schemaStr, setSchemaStr] = useState(() => JSON.stringify(schemaSnapshot, null, 2));
   const [schemaFailed, setSchemaFailed] = useState(false);
@@ -24,9 +24,10 @@ export function Playground() {
     }
   }, [schemaStr]);
   const jsonSchemaForm = (
-    <Textarea
+    <JsonInput
+      formatOnBlur
       label='JSON Schema'
-      onChange={(e) => setSchemaStr(e.currentTarget.value)}
+      onChange={(e) => setSchemaStr(e || '{}')}
       value={schemaStr}
       autosize
       error={schemaFailed ? 'Invalid JSON' : false}
@@ -36,7 +37,7 @@ export function Playground() {
   // JSON Schema area end
 
   // UI Schema area start
-  // textarea->uiSchemaStr->(filter unparsed)->uiSchemaSnapshot->Form
+  // JsonInput->uiSchemaStr->(filter unparsed)->uiSchemaSnapshot->Form
   const [uiSchemaSnapshot, setUiSchemaSnapshot] = useState({});
   const [uiSchemaStr, setUiSchemaStr] = useState(() => JSON.stringify(uiSchemaSnapshot, null, 2));
   const [uiSchemaFailed, setUiSchemaFailed] = useState(false);
@@ -49,9 +50,10 @@ export function Playground() {
     }
   }, [uiSchemaStr]);
   const uiSchemaForm = (
-    <Textarea
+    <JsonInput
+      formatOnBlur
       label='UI Schema'
-      onChange={(e) => setUiSchemaStr(e.currentTarget.value)}
+      onChange={(e) => setUiSchemaStr(e || '{}')}
       value={uiSchemaStr}
       autosize
       error={uiSchemaFailed ? 'Invalid JSON' : false}
@@ -61,8 +63,8 @@ export function Playground() {
   // UI Schema area end
 
   // Form data area start
-  // textarea->formDataStr->(filter unparsed)->formDataSnapshot->
-  // Form->(onChange)->formDataStr->textarea->formDataStr->(always parsed)
+  // JsonInput->formDataStr->(filter unparsed)->formDataSnapshot->
+  // Form->(onChange)->formDataStr->JsonInput->formDataStr->(always parsed)
   // ->formDataSnapshot->loop
   const [formDataSnapshot, setFormDataSnapshot] = useState({});
   const [formDataStr, setFormDataStr] = useState(() => JSON.stringify(formDataSnapshot, null, 2));
@@ -76,9 +78,10 @@ export function Playground() {
     }
   }, [formDataStr]);
   const formData = (
-    <Textarea
+    <JsonInput
+      formatOnBlur
       label='Form Data'
-      onChange={(e) => setFormDataStr(e.currentTarget.value)}
+      onChange={(e) => setFormDataStr(e || '{}')}
       value={formDataStr}
       autosize
       error={formDataFailed ? 'Invalid JSON' : false}
