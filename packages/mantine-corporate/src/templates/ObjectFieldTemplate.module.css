@@ -1,20 +1,25 @@
 .legend {
-  background-color: #1e48bbd0;
-  padding: 0.5rem;
-  border-radius: 4px;
-
+  padding: 4px;
   & svg {
     transition: transform 200ms ease;
   }
 
   /* if the element next to this has the attribute aria-hidden... */
-  &:has(+ [aria-hidden="true"]) svg {
+  &:has(+ .collapse[aria-hidden="true"]) svg {
     transform: rotate(180deg);
   }
 }
-.title {
-  color: #fff;
-}
-.description {
-  color: #fff;
+.root {
+  border-radius: 4px;
+  padding: 4px;
+  margin:4px 0;
+  
+
+  background-color: #fff;
+
+  transition: background-color 200ms ease;
+
+  &:has(> .collapse[aria-hidden="true"]) {
+    background-color: #f2f2f2;
+  }
 }

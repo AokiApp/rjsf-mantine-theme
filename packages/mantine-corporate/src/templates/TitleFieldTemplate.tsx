@@ -16,7 +16,7 @@ export default function TitleField<T = any, S extends StrictRJSFSchema = RJSFSch
     return null;
   }
   return (
-    <Title order={5} className='armt-template-title' id={id}>
+    <Title order={5} className='armt-template-title' id={id} size='sm' fw={500} role='heading'>
       {title}
       {required && <span className='required'>{REQUIRED_FIELD_SYMBOL}</span>}
     </Title>

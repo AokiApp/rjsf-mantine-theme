@@ -1,4 +1,4 @@
-import { Group, Box, Collapse, Text, Stack } from '@mantine/core';
+import { Group, Box, Collapse, Stack } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import {
   FormContextType,
@@ -9,9 +9,11 @@ import {
   canExpand,
   descriptionId,
   titleId,
+  getUiOptions,
+  getTemplate,
 } from '@rjsf/utils';
 import classes from './ObjectFieldTemplate.module.css';
-import { IconChevronDown } from '@tabler/icons-react';
+import { IconChevronUp } from '@tabler/icons-react';
 
 /** The `ObjectFieldTemplate` is the template to use to render all the inner properties of an object along with the
  * title and description if available. If the object is expandable, then an `AddButton` is also rendered after all
@@ -33,18 +35,18 @@ export default function ObjectFieldTemplate<
     properties,
     readonly,
     registry,
-    //required,
+    required,
     schema,
     title,
     uiSchema,
   } = props;
-  //const options = getUiOptions<T, S, F>(uiSchema);
-  // const TitleFieldTemplate = getTemplate<'TitleFieldTemplate', T, S, F>('TitleFieldTemplate', registry, options);
-  // const DescriptionFieldTemplate = getTemplate<'DescriptionFieldTemplate', T, S, F>(
-  //   'DescriptionFieldTemplate',
-  //   registry,
-  //   options,
-  // );
+  const options = getUiOptions<T, S, F>(uiSchema);
+  const TitleFieldTemplate = getTemplate<'TitleFieldTemplate', T, S, F>('TitleFieldTemplate', registry, options);
+  const DescriptionFieldTemplate = getTemplate<'DescriptionFieldTemplate', T, S, F>(
+    'DescriptionFieldTemplate',
+    registry,
+    options,
+  );
   // Button templates are not overridden in the uiSchema
   const {
     ButtonTemplates: { AddButton },
@@ -52,21 +54,31 @@ export default function ObjectFieldTemplate<
 
   const [opened, { toggle }] = useDisclosure(true);
 
+  const classNames = options.classNames;
   const legendNode = (
     <Group onClick={toggle} className={classes.legend} justify='space-between'>
       <Group>
         {title && (
-          <Text size='sm' fw={500} id={titleId<T>(idSchema)} role='heading' c='white'>
-            {title}
-          </Text>
+          <TitleFieldTemplate
+            id={titleId<T>(idSchema)}
+            title={title}
+            required={required}
+            schema={schema}
+            uiSchema={uiSchema}
+            registry={registry}
+          />
         )}
         {description && (
-          <Text size='xs' id={descriptionId<T>(idSchema)} c='white'>
-            {description}
-          </Text>
+          <DescriptionFieldTemplate
+            id={descriptionId<T>(idSchema)}
+            description={description}
+            schema={schema}
+            uiSchema={uiSchema}
+            registry={registry}
+          />
         )}
       </Group>
-      <IconChevronDown color='white' />
+      <IconChevronUp />
     </Group>
   );
   return (
@@ -77,10 +89,11 @@ export default function ObjectFieldTemplate<
       }}
       role='group'
       gap={'xs'}
+      className={`armt-template-objectfield ${classNames ?? ''} ${classes.root}`}
     >
       {legendNode}
-      <Collapse in={opened}>
-        <Box px='xs'>{properties.map((prop: ObjectFieldTemplatePropertyType) => prop.content)}</Box>
+      <Collapse in={opened} className={classes.collapse}>
+        <Box>{properties.map((prop: ObjectFieldTemplatePropertyType) => prop.content)}</Box>
         {canExpand<T, S, F>(schema, uiSchema, formData) && (
           <AddButton
             className='object-property-expand'
