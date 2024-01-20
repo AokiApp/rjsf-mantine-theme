@@ -39,6 +39,7 @@ export default function ObjectFieldTemplate<
     schema,
     title,
     uiSchema,
+    errorSchema,
   } = props;
   const options = getUiOptions<T, S, F>(uiSchema);
   const TitleFieldTemplate = getTemplate<'TitleFieldTemplate', T, S, F>('TitleFieldTemplate', registry, options);
@@ -54,8 +55,12 @@ export default function ObjectFieldTemplate<
 
   const [opened, { toggle }] = useDisclosure(true);
 
+  const showLegend = (title || description) && options?.hideLegend !== true;
+
   const classNames = options.classNames;
-  const legendNode = (
+  const containError = errorSchema && Object.keys(errorSchema).length > 0;
+
+  const legendNode = showLegend ? (
     <Group onClick={toggle} className={classes.legend} justify='space-between'>
       <Group>
         {title && (
@@ -80,7 +85,7 @@ export default function ObjectFieldTemplate<
       </Group>
       <IconChevronUp />
     </Group>
-  );
+  ) : null;
   return (
     <Stack
       id={idSchema.$id}
@@ -89,11 +94,13 @@ export default function ObjectFieldTemplate<
       }}
       role='group'
       gap={'xs'}
-      className={`armt-template-objectfield ${classNames ?? ''} ${classes.root}`}
+      className={`armt-template-objectfield ${classNames ?? ''} ${classes.root} ${containError && classes.error}`}
     >
       {legendNode}
       <Collapse in={opened} className={classes.collapse}>
-        <Box>{properties.map((prop: ObjectFieldTemplatePropertyType) => prop.content)}</Box>
+        <Box className='armt-template-objectfield-item'>
+          {properties.map((prop: ObjectFieldTemplatePropertyType) => prop.content)}
+        </Box>
         {canExpand<T, S, F>(schema, uiSchema, formData) && (
           <AddButton
             className='object-property-expand'
