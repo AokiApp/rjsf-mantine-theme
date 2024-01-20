@@ -6,8 +6,8 @@ import validator from '@rjsf/validator-ajv6';
 import { useEffect, useState } from 'react';
 import { samples } from './samples';
 import { Sample } from './samples/Sample';
-import GeoPosition from './samples/components/GeoPosition';
-import SpecialInput from './samples/components/SpecialInput';
+import GeoPosition from './samples/made-by-rjsf-team/components/GeoPosition';
+import SpecialInput from './samples/made-by-rjsf-team/components/SpecialInput';
 
 export function Playground() {
   // JSON Schema area start
@@ -95,15 +95,24 @@ export function Playground() {
     key: string;
     value: Sample;
   } | null>(null);
-  const data = Object.keys(samples).map((key) => ({
-    value: key,
-    label: key,
-  }));
+  const sampleList: Sample[] = [];
+  const sectionList = Object.keys(samples).map((key) => {
+    return {
+      group: key,
+      items: Object.keys(samples[key as keyof typeof samples]).map((k) => {
+        sampleList.push(samples[key as keyof typeof samples][k]);
+        return {
+          value: (sampleList.length - 1).toString(),
+          label: k,
+        };
+      }),
+    };
+  });
   const changeHdl = (e: string | null) => {
     if (e === null) {
       return;
     }
-    const sample = samples[e];
+    const sample = sampleList[parseInt(e)];
     setPresetPropValue({
       key: e,
       value: sample,
@@ -118,12 +127,13 @@ export function Playground() {
     <Select
       label='Preset'
       description='Select here to insert'
-      data={data}
+      data={sectionList}
       value={presetPropValue?.key}
       onChange={changeHdl}
       allowDeselect
       style={{ flexGrow: 1 }}
       searchable
+      maxDropdownHeight={1000}
     />
   );
   // Preset area end
