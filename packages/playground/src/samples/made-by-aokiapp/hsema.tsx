@@ -451,7 +451,7 @@ function UserIdentInfoField(props: FieldProps) {
   return <ObjectField {...newProps} />;
 }
 
-import classes from './hsema.module.css';
+import classes from './components/hsema.module.css';
 
 const uiSchema: UiSchema = {
   basicInfo: {

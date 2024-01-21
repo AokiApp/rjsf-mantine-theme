@@ -1,4 +1,5 @@
 import { Sample } from '../Sample';
+import PopoutObjectFieldTemplate from './components/PopoutObjectFieldTemplate';
 
 const k8spodspec: Sample = {
   schema: {
@@ -15974,7 +15975,21 @@ const k8spodspec: Sample = {
     },
     $ref: '#/definitions/io.k8s.api.core.v1.PodSpec',
   },
-  uiSchema: {},
+  uiSchema: {
+    'ui:options': {
+      popoutType: 'drawer',
+    },
+    imagePullSecrets: {
+      items: {
+        'ui:options': {
+          popoutType: 'popover',
+        },
+      },
+    },
+  },
   formData: {},
+  templates: {
+    ObjectFieldTemplate: PopoutObjectFieldTemplate,
+  },
 };
 export default k8spodspec;
