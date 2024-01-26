@@ -1,6 +1,7 @@
 import { FormContextType, RegistryWidgetsType, RJSFSchema, StrictRJSFSchema } from '@rjsf/utils';
 
 import FileWidget from './FileWidget';
+import PillInputWidget from './PillInputWidget';
 
 export function generateWidgets<
   T = any,
@@ -9,6 +10,7 @@ export function generateWidgets<
 >(): RegistryWidgetsType<T, S, F> {
   return {
     FileWidget,
+    PillInputWidget,
   };
 }
 

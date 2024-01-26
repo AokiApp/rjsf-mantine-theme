@@ -82,6 +82,13 @@ const uiSchema = {
   body: {
     'ui:widget': 'textarea',
   },
+  tags: {
+    'ui:options': {
+      widget: 'PillInputWidget',
+      punctuation: ',',
+      removeOnBackspace: true,
+    },
+  },
   images: {
     'ui:options': {
       accept: 'image/*',
