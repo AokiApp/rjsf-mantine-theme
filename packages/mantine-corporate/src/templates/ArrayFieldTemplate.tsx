@@ -9,6 +9,7 @@ import {
 } from '@rjsf/utils';
 
 import { Group, Box, Divider } from '@mantine/core';
+import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 
 /** The `ArrayFieldTemplate` component is the template used to render all items in an array.
  *
@@ -83,9 +84,23 @@ export default function ArrayFieldTemplate<
     arrItems = (
       <>
         <Divider my='xs' label={`${_title || '配列'} の先頭`} labelPosition='center' />
-        {items.map(({ key, ...itemProps }: ArrayFieldTemplateItemType<T, S, F>) => (
-          <ArrayFieldItemTemplate key={key} {...itemProps} />
-        ))}{' '}
+        <DragDropContext
+          onDragEnd={({ destination, source }) => {
+            // ad hoc solution for calling onReorderClick
+            items[0].onReorderClick(source.index, destination?.index || 0)();
+          }}
+        >
+          <Droppable droppableId='dnd-list' direction='vertical'>
+            {(provided) => (
+              <div {...provided.droppableProps} ref={provided.innerRef}>
+                {items.map(({ key, ...itemProps }: ArrayFieldTemplateItemType<T, S, F>) => {
+                  return <ArrayFieldItemTemplate key={key} {...itemProps} />;
+                })}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
         <Divider my='xs' label={`${_title || '配列'} の末尾`} labelPosition='center' />
       </>
     );

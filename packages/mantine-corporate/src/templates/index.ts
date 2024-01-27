@@ -5,6 +5,7 @@ import FieldTemplate from './FieldTemplate';
 import ObjectFieldTemplate from './ObjectFieldTemplate';
 import TitleFieldTemplate from './TitleFieldTemplate';
 import ArrayFieldTemplate from './ArrayFieldTemplate';
+import ArrayFieldItemTemplate from './ArrayFieldItemTemplate';
 
 export function generateTemplates<
   T = any,
@@ -17,6 +18,7 @@ export function generateTemplates<
     FieldTemplate,
     ObjectFieldTemplate,
     TitleFieldTemplate,
+    ArrayFieldItemTemplate,
   };
 }
 

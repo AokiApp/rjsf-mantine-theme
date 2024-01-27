@@ -41,7 +41,8 @@
     "@tabler/icons-react": ">=2.45.0",
     "dayjs": ">=1.11.10",
     "react": ">=17",
-    "@aokiapp/rjsf-mantine-theme": ">=0.0.1"
+    "@aokiapp/rjsf-mantine-theme": ">=0.0.1",
+    "@hello-pangea/dnd": ">=16.5.0"
   },
   "devDependencies": {
     "@rjsf/snapshot-tests": "^5.16.x",
