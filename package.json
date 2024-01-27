@@ -28,7 +28,7 @@
     "ci:versionup:major": "lerna version major --no-push --no-git-tag-version --yes && npm run commit-version",
     "commit-version": "git add . && git commit -m \"chore(release): v`node -p 'require(\"./lerna.json\").version'`\"",
     "release": "lerna publish from-package",
-    "ci:release": "lerna publish from-package --yes"
+    "ci:release": "npm run build && lerna publish from-package --yes"
   },
   "keywords": [],
   "author": "",
