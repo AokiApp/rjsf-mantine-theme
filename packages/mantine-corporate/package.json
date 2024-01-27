@@ -1,7 +1,7 @@
 {
   "name": "@aokiapp/rjsf-mantine-corporate",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.1.0",
   "main": "./dist/index.js",
   "module": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -32,17 +32,17 @@
     "node": ">=20"
   },
   "peerDependencies": {
+    "@aokiapp/rjsf-mantine-theme": ">=0.0.1",
+    "@hello-pangea/dnd": ">=16.5.0",
     "@mantine/core": ">=7.4.0",
     "@mantine/dates": ">=7.4.0",
-    "@mantine/hooks": ">=7.4.0",
     "@mantine/dropzone": ">=7.4.0",
+    "@mantine/hooks": ">=7.4.0",
     "@rjsf/core": ">=5.16.1",
     "@rjsf/utils": ">=5.16.1",
     "@tabler/icons-react": ">=2.45.0",
     "dayjs": ">=1.11.10",
-    "react": ">=17",
-    "@aokiapp/rjsf-mantine-theme": ">=0.0.1",
-    "@hello-pangea/dnd": ">=16.5.0"
+    "react": ">=17"
   },
   "devDependencies": {
     "@rjsf/snapshot-tests": "^5.16.x",
