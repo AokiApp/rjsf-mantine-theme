@@ -33,7 +33,7 @@
     "react": "^18.2.0"
   },
   "dependencies": {
-    "@aokiapp/rjsf-mantine-corporate": "file://../rjsf-mantine-corporate",
+    "@aokiapp/rjsf-mantine-corporate": "^0.0.1",
     "@aokiapp/rjsf-mantine-theme": "^0.0.5",
     "@babel/runtime": "^7.22.15",
     "@mantine/core": "^7.4.0",
