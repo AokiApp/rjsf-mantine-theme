@@ -1,6 +1,6 @@
 {
   "name": "@aokiapp/rjsf-mantine-playground",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "rjsf playground",
   "private": true,
   "type": "module",
@@ -34,8 +34,9 @@
   },
   "dependencies": {
     "@aokiapp/rjsf-mantine-corporate": "file://../rjsf-mantine-corporate",
-    "@aokiapp/rjsf-mantine-theme": "^0.0.5",
+    "@aokiapp/rjsf-mantine-theme": "^0.1.0",
     "@babel/runtime": "^7.22.15",
+    "@hello-pangea/dnd": "^16.5.0",
     "@mantine/core": "^7.4.0",
     "@mantine/dates": "^7.4.0",
     "@mantine/dropzone": "^7.4.2",
@@ -50,8 +51,7 @@
     "ajv-i18n": "^4.2.0",
     "dayjs": "^1.11.10",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "@hello-pangea/dnd": "^16.5.0"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.22.15",
