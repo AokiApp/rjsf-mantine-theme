@@ -9,3 +9,42 @@
   width: 32px;
   height: 32px;
 }
+.dropToAction {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 0.5rem;
+  flex-grow: 1;
+  border-radius: var(--mantine-radius-sm);
+  padding: 4px;
+  border: 1px solid transparent;
+  opacity: 0.5;
+
+  .dtaIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .dtaLabel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    
+  }
+  &.dtaDraggingOver {
+    opacity: 1;
+  }
+}
+.dropToCopy {
+  color: var(--mantine-color-blue-6);
+  border-color: var(--mantine-color-blue-6);
+  background-color: var(--mantine-color-blue-0);
+}
+.dropToRemove {
+  color: var(--mantine-color-red-6);
+  border-color: var(--mantine-color-red-6);
+  background-color: var(--mantine-color-red-0);
+}

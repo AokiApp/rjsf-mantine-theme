@@ -10,6 +10,9 @@ import {
 
 import { Group, Box, Divider } from '@mantine/core';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
+import { useState } from 'react';
+import classes from './ArrayFieldTemplate.module.css';
+import { IconCopy, IconTrash } from '@tabler/icons-react';
 
 /** The `ArrayFieldTemplate` component is the template used to render all items in an array.
  *
@@ -79,18 +82,28 @@ export default function ArrayFieldTemplate<
     </Group>
   );
 
+  const [isDragging, setIsDragging] = useState(false);
+
   let arrItems;
   if (items && items.length > 0) {
     arrItems = (
       <>
         <Divider my='xs' label={`${_title || '配列'} の先頭`} labelPosition='center' />
         <DragDropContext
+          onBeforeCapture={() => setIsDragging(true)}
           onDragEnd={({ destination, source }) => {
-            // ad hoc solution for calling onReorderClick
-            items[0].onReorderClick(source.index, destination?.index || 0)();
+            setIsDragging(false);
+            if (destination?.droppableId === 'array') {
+              // ad hoc solution for calling onReorderClick
+              items[0].onReorderClick(source.index, destination?.index || 0)();
+            } else if (destination?.droppableId === 'copy') {
+              items[0].onCopyIndexClick(source.index)();
+            } else if (destination?.droppableId === 'remove') {
+              items[0].onDropIndexClick(source.index)();
+            }
           }}
         >
-          <Droppable droppableId='dnd-list' direction='vertical'>
+          <Droppable droppableId='array' direction='vertical'>
             {(provided) => (
               <div {...provided.droppableProps} ref={provided.innerRef}>
                 {items.map(({ key, ...itemProps }: ArrayFieldTemplateItemType<T, S, F>) => {
@@ -100,6 +113,16 @@ export default function ArrayFieldTemplate<
               </div>
             )}
           </Droppable>
+          {items[0].hasToolbar && isDragging && (
+            <Group m='sm'>
+              {items[0].hasCopy && (
+                <DropToAction icon={<IconCopy />} label='コピー' className={classes.dropToCopy} droppableId='copy' />
+              )}
+              {items[0].hasRemove && (
+                <DropToAction icon={<IconTrash />} label='削除' className={classes.dropToRemove} droppableId='remove' />
+              )}
+            </Group>
+          )}
         </DragDropContext>
         <Divider my='xs' label={`${_title || '配列'} の末尾`} labelPosition='center' />
       </>
@@ -124,5 +147,32 @@ export default function ArrayFieldTemplate<
       </Group>
       {arrItems}
     </Box>
+  );
+}
+
+function DropToAction({
+  icon,
+  label,
+  className,
+  droppableId,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  className: string;
+  droppableId: string;
+}) {
+  return (
+    <Droppable droppableId={droppableId} direction='horizontal'>
+      {(provided, snapshot) => (
+        <div
+          className={`${classes.dropToAction} ${className} ${snapshot.isDraggingOver && classes.dtaDraggingOver}`}
+          {...provided.droppableProps}
+          ref={provided.innerRef}
+        >
+          <div className={classes.dtaIcon}>{icon}</div>
+          <div className={classes.dtaLabel}>{label}</div>
+        </div>
+      )}
+    </Droppable>
   );
 }
