@@ -1,6 +1,5 @@
 {
   "name": "@aokiapp/rjsf-mantine-corporate",
-  "private": true,
   "version": "0.0.1",
   "main": "./dist/index.js",
   "module": "./lib/index.js",
@@ -48,9 +47,6 @@
     "@rjsf/snapshot-tests": "^5.16.x",
     "@types/react-test-renderer": "^18.0.7",
     "react-test-renderer": "^18.2.0"
-  },
-  "publishConfig": {
-    "access": "restricted"
   },
   "author": "Yuki Aoki<me@aoki.app>",
   "contributors": [],
