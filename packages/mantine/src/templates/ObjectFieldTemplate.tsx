@@ -83,7 +83,9 @@ export default function ObjectFieldTemplate<
       }}
       className={`armt-template-objectfield ${classNames ?? ''}`}
     >
-      <Box>{properties.map((prop: ObjectFieldTemplatePropertyType) => prop.content)}</Box>
+      <Box className='armt-template-objectfield-item'>
+        {properties.map((prop: ObjectFieldTemplatePropertyType) => prop.content)}
+      </Box>
       {canExpand<T, S, F>(schema, uiSchema, formData) && (
         <AddButton
           className='object-property-expand'
