@@ -1,5 +1,5 @@
 import { ArrayFieldTemplateItemType, FormContextType, RJSFSchema, StrictRJSFSchema } from '@rjsf/utils';
-import { Group, Box, Stack, rem } from '@mantine/core';
+import { Group, Box, rem } from '@mantine/core';
 import { Draggable } from '@hello-pangea/dnd';
 import { IconGripVertical } from '@tabler/icons-react';
 import classes from './ArrayFieldTemplate.module.css';
