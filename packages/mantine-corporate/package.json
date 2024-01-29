@@ -1,8 +1,8 @@
 {
   "name": "@aokiapp/rjsf-mantine-corporate",
   "version": "0.2.0",
-  "main": "./dist/index.js",
-  "module": "./lib/index.js",
+  "main": "./dist/index.cjs",
+  "module": "./lib/index.mjs",
   "types": "./lib/index.d.ts",
   "description": "Corporational variant of theme, based on @aokiapp/rjsf-mantine-theme",
   "files": [

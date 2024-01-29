@@ -1,8 +1,8 @@
 {
   "name": "@aokiapp/rjsf-mantine-theme",
   "version": "0.2.0",
-  "main": "./dist/index.js",
-  "module": "./lib/index.js",
+  "main": "./dist/index.cjs",
+  "module": "./lib/index.mjs",
   "types": "./lib/index.d.ts",
   "description": "Mantine theme, fields and widgets for react-jsonschema-form",
   "files": [
