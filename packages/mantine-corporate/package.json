@@ -10,11 +10,7 @@
     "lib"
   ],
   "scripts": {
-    "build:ts": "tsc -b",
-    "build:cjs": "esbuild ./src/index.ts --bundle --outfile=dist/index.js --sourcemap --packages=external --format=cjs",
-    "build:esm": "esbuild ./src/index.ts --bundle --outfile=dist/mantine.esm.js --sourcemap --packages=external --format=esm",
-    "build:umd": "rollup dist/mantine.esm.js --format=umd --file=dist/mantine.umd.js --name=@aokiapp/rjsf-mantine-theme",
-    "build": "npm run build:ts && npm run build:cjs && npm run build:esm && npm run build:umd",
+    "build": "rollup -c",
     "cs-check": "prettier -l \"{src,test}/**/*.ts?(x)\"",
     "cs-format": "prettier \"{src,test}/**/*.ts?(x)\" --write",
     "lint": "eslint src test",
@@ -45,8 +41,11 @@
   },
   "devDependencies": {
     "@rjsf/snapshot-tests": "^5.16.x",
+    "@rollup/plugin-node-resolve": "^15.2.3",
     "@types/react-test-renderer": "^18.0.7",
-    "react-test-renderer": "^18.2.0"
+    "react-test-renderer": "^18.2.0",
+    "rollup-plugin-esbuild": "^6.1.1",
+    "rollup-plugin-postcss": "^4.0.2"
   },
   "author": "Yuki Aoki<me@aoki.app>",
   "contributors": [],
