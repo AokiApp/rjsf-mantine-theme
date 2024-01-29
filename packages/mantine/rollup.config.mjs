@@ -1,5 +1,6 @@
 import esbuild from 'rollup-plugin-esbuild';
 import postcss from 'rollup-plugin-postcss';
+import babel from '@rollup/plugin-babel';
 import path from 'path';
 
 const getPath = (storyPath) => path.resolve(process.cwd(), storyPath).replace(/\\/g, '/');
@@ -25,6 +26,9 @@ export default {
     },
   ],
   plugins: [
+    babel({
+      babelHelpers: 'runtime',
+    }),
     esbuild({
       sourceMap: false,
       tsconfig: getPath('tsconfig.json'),
