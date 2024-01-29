@@ -38,6 +38,8 @@
   ],
   "devDependencies": {
     "@babel/eslint-parser": "^7.23.3",
+    "@babel/plugin-proposal-optional-chaining": "^7.21.0",
+    "@babel/preset-typescript": "^7.23.3",
     "@types/jest": "^29.5.11",
     "@types/node": "^20.11.0",
     "@types/prettier": "^2.7.3",
