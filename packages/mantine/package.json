@@ -10,7 +10,9 @@
     "lib"
   ],
   "scripts": {
-    "build": "rollup -c",
+    "build:ts": "tsc -b",
+    "build:bundle": "rollup -c",
+    "build": "npm run build:ts && npm run build:bundle",
     "cs-check": "prettier -l \"{src,test}/**/*.ts?(x)\"",
     "cs-format": "prettier \"{src,test}/**/*.ts?(x)\" --write",
     "lint": "eslint src test",
