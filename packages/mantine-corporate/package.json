@@ -41,16 +41,8 @@
   },
   "devDependencies": {
     "@rjsf/snapshot-tests": "^5.16.x",
-    "@rollup/plugin-babel": "^6.0.4",
-    "@rollup/plugin-commonjs": "^25.0.7",
-    "@rollup/plugin-node-resolve": "^15.2.3",
     "@types/react-test-renderer": "^18.0.7",
-    "esbuild": "^0.20.0",
-    "react-test-renderer": "^18.2.0",
-    "rollup": "^4.9.6",
-    "rollup-plugin-banner2": "^1.2.2",
-    "rollup-plugin-esbuild": "^6.1.1",
-    "rollup-plugin-postcss": "^4.0.2"
+    "react-test-renderer": "^18.2.0"
   },
   "author": "Yuki Aoki<me@aoki.app>",
   "contributors": [],
