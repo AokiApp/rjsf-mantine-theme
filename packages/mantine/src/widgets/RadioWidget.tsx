@@ -12,6 +12,7 @@ import {
 
 import { Group, Radio } from '@mantine/core';
 import { createErrors } from '../utils/createErrors';
+import { useFieldContext } from '../templates/FieldTemplate';
 
 /** The `RadioWidget` is a widget for rendering a radio group.
  *  It is typically used with a string property constrained with enum options.
@@ -44,11 +45,12 @@ export default function RadioWidget<T = any, S extends StrictRJSFSchema = RJSFSc
   const _onBlur = () => onBlur(id, value);
   const _onFocus = () => onFocus(id, value);
 
+  const { description } = useFieldContext();
   return (
     <Radio.Group
       name={id}
       label={labelValue(label || undefined, hideLabel, false)}
-      description={options.description}
+      description={description}
       required={required}
       value={enumOptionsIndexForValue<S>(value, enumOptions, false) as string | undefined} // since I set multiple to false, this should not be an array, so I need to cast and suppress the error
       onChange={_onChange}

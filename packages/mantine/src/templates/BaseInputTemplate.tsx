@@ -12,6 +12,7 @@ import {
   StrictRJSFSchema,
 } from '@rjsf/utils';
 import { createErrors } from '../utils/createErrors';
+import { useFieldContext } from './FieldTemplate';
 
 /** The `BaseInputTemplate` is the template to use to render the basic `<input>` component for the `core` theme.
  * It is used as the template for rendering many of the <input> based widgets that differ by `type` and callbacks only.
@@ -52,6 +53,8 @@ export default function BaseInputTemplate<
     console.log('No id for', props);
     throw new Error(`no id for props ${JSON.stringify(props)}`);
   }
+
+  const { description } = useFieldContext();
   const inputProps = getInputProps<T, S, F>(schema, type, options);
 
   let inputValue;
@@ -77,7 +80,7 @@ export default function BaseInputTemplate<
         key={id}
         id={id}
         placeholder={placeholder}
-        description={schema.description}
+        description={description}
         {...inputProps}
         label={labelValue(label, hideLabel, undefined)}
         required={required}

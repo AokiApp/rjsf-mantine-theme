@@ -6,11 +6,11 @@ import {
   RJSFSchema,
   StrictRJSFSchema,
   canExpand,
-  descriptionId,
   getTemplate,
   getUiOptions,
   titleId,
 } from '@rjsf/utils';
+import { useFieldContext } from './FieldTemplate';
 
 /** The `ObjectFieldTemplate` is the template to use to render all the inner properties of an object along with the
  * title and description if available. If the object is expandable, then an `AddButton` is also rendered after all
@@ -24,7 +24,6 @@ export default function ObjectFieldTemplate<
   F extends FormContextType = any,
 >(props: ObjectFieldTemplateProps<T, S, F>) {
   const {
-    description,
     disabled,
     formData,
     idSchema,
@@ -37,13 +36,11 @@ export default function ObjectFieldTemplate<
     title,
     uiSchema,
   } = props;
+
+  const { description } = useFieldContext();
   const options = getUiOptions<T, S, F>(uiSchema);
   const TitleFieldTemplate = getTemplate<'TitleFieldTemplate', T, S, F>('TitleFieldTemplate', registry, options);
-  const DescriptionFieldTemplate = getTemplate<'DescriptionFieldTemplate', T, S, F>(
-    'DescriptionFieldTemplate',
-    registry,
-    options,
-  );
+
   // Button templates are not overridden in the uiSchema
   const {
     ButtonTemplates: { AddButton },
@@ -63,15 +60,7 @@ export default function ObjectFieldTemplate<
           registry={registry}
         />
       )}
-      {description && (
-        <DescriptionFieldTemplate
-          id={descriptionId<T>(idSchema)}
-          description={description}
-          schema={schema}
-          uiSchema={uiSchema}
-          registry={registry}
-        />
-      )}
+      {description}
     </Group>
   );
   return (

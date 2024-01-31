@@ -12,6 +12,7 @@ import {
 import { Box, Checkbox } from '@mantine/core';
 import { FocusEvent, useCallback } from 'react';
 import { createErrors } from '../utils/createErrors';
+import { useFieldContext } from '../templates/FieldTemplate';
 
 /** The `CheckboxesWidget` is a widget for rendering checkbox groups.
  *  It is typically used to represent an array of enums.
@@ -26,7 +27,7 @@ export default function CheckboxesWidget<
   const {
     id,
     disabled,
-    options: { inline = false, enumOptions, enumDisabled, emptyValue, ...options },
+    options: { inline = false, enumOptions, enumDisabled, emptyValue },
     value,
     autofocus,
     readonly,
@@ -35,7 +36,6 @@ export default function CheckboxesWidget<
     onChange,
     onBlur,
     onFocus,
-    schema,
     required,
     rawErrors,
     hideError,
@@ -57,7 +57,7 @@ export default function CheckboxesWidget<
     [onFocus, id, enumOptions, emptyValue],
   );
 
-  const description = options.description ?? schema.description;
+  const { description } = useFieldContext();
 
   const _onChange = (nextIndices: string[]) => {
     const nextValues = enumOptionsValueForIndex<S>(nextIndices, enumOptions, []) as T[];

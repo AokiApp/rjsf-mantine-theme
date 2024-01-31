@@ -10,6 +10,7 @@ import {
 import { ChangeEvent, FocusEvent, useCallback } from 'react';
 import { Checkbox } from '@mantine/core';
 import { createErrors } from '../utils/createErrors';
+import { useFieldContext } from '../templates/FieldTemplate';
 
 /** The `CheckBoxWidget` is a widget for rendering boolean properties.
  *  It is typically used to represent a boolean.
@@ -31,7 +32,6 @@ export default function CheckboxWidget<
     autofocus,
     onChange,
     onBlur,
-    options,
     onFocus,
     schema,
     rawErrors,
@@ -56,7 +56,8 @@ export default function CheckboxWidget<
     (event: FocusEvent<HTMLInputElement>) => onFocus(id, event.target.checked),
     [onFocus, id],
   );
-  const description = options.description ?? schema.description;
+
+  const { description } = useFieldContext();
   return (
     <Checkbox
       description={description}

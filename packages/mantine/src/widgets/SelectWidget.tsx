@@ -11,6 +11,7 @@ import {
 } from '@rjsf/utils';
 import { MultiSelect, Select } from '@mantine/core';
 import { createErrors } from '../utils/createErrors';
+import { useFieldContext } from '../templates/FieldTemplate';
 
 /** The `SelectWidget` is a widget for rendering dropdowns.
  *  It is typically used with string properties constrained with enum options.
@@ -18,7 +19,6 @@ import { createErrors } from '../utils/createErrors';
  * @param props - The `WidgetProps` for this component
  */
 function SelectWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extends FormContextType = any>({
-  schema,
   id,
   options,
   value,
@@ -56,6 +56,8 @@ function SelectWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extend
     [onChange, enumOptions, optEmptyVal],
   );
 
+  const { description } = useFieldContext();
+
   if (multiple) {
     return (
       <MultiSelect
@@ -64,7 +66,7 @@ function SelectWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extend
           const disabled = enumDisabled && enumDisabled.indexOf(value) !== -1;
           return { value: String(i), label, disabled };
         })}
-        description={schema.description}
+        description={description}
         disabled={disabled || readonly}
         error={createErrors<T>(rawErrors, hideError)}
         label={labelValue(label, hideLabel, false)}
@@ -90,7 +92,7 @@ function SelectWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extend
           const disabled = enumDisabled && enumDisabled.indexOf(value) !== -1;
           return { value: String(i), label, disabled };
         })}
-        description={schema.description}
+        description={description}
         disabled={disabled || readonly}
         error={createErrors<T>(rawErrors, hideError)}
         label={labelValue(label, hideLabel, false)}

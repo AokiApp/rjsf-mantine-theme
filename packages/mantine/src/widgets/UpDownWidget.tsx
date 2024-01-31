@@ -9,6 +9,7 @@ import {
 } from '@rjsf/utils';
 import { FocusEvent, useCallback } from 'react';
 import { createErrors } from '../utils/createErrors';
+import { useFieldContext } from '../templates/FieldTemplate';
 
 /** The `UpDownWidget` component uses the `BaseInputTemplate` changing the type to `number`.
  *
@@ -62,13 +63,15 @@ export default function UpDownWidget<T = any, S extends StrictRJSFSchema = RJSFS
     [onFocus, id],
   );
 
+  const { description } = useFieldContext();
+
   const inputValue = value || value === 0 ? value : '';
   return (
     <NumberInput
       key={id}
       id={id}
       placeholder={placeholder}
-      description={schema.description}
+      description={description}
       max={schema.maximum}
       min={schema.minimum}
       label={labelValue(label, hideLabel, undefined)}
