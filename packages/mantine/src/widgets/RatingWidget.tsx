@@ -23,7 +23,6 @@ export default function RatingWidget<T = any, S extends StrictRJSFSchema = RJSFS
     onChange,
     onChangeOverride,
     autofocus,
-    options,
     schema,
     rawErrors,
     hideError,
