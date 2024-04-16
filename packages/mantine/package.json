@@ -1,6 +1,6 @@
 {
   "name": "@aokiapp/rjsf-mantine-theme",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "main": "./dist/index.cjs",
   "module": "./lib/index.mjs",
   "types": "./lib/index.d.ts",
