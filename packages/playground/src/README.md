@@ -20,13 +20,13 @@ You can install the package:
 npm:
 
 ```bash
-npm install @mantine/core@7.4.0 @mantine/dates@7.4.0 @mantine/hooks@7.4.0 @rjsf/core @tabler/icons-react dayjs react
+npm install @mantine/core@7 @mantine/dates@7 @mantine/hooks@7 @rjsf/core @tabler/icons-react dayjs react
 ```
 
 yarn:
 
 ```bash
-yarn add @mantine/core@7.4.0 @mantine/dates@7.4.0 @mantine/hooks@7.4.0 @rjsf/core @tabler/icons-react dayjs react
+yarn add @mantine/core@7 @mantine/dates@7 @mantine/hooks@7 @rjsf/core @tabler/icons-react dayjs react
 ```
 
 ## Usage
