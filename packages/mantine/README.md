@@ -20,13 +20,13 @@ You can install the package:
 npm:
 
 ```bash
-npm install @mantine/core@7.4.0 @mantine/dates@7.4.0 @mantine/hooks@7.4.0 @rjsf/core @tabler/icons-react dayjs react
+npm install @mantine/core@7.4.0 @mantine/dates@7.4.0 @mantine/hooks@7.4.0 @rjsf/core @tabler/icons-react dayjs react @aokiapp/rjsf-mantine-theme
 ```
 
 yarn:
 
 ```bash
-yarn add @mantine/core@7.4.0 @mantine/dates@7.4.0 @mantine/hooks@7.4.0 @rjsf/core @tabler/icons-react dayjs react
+yarn add @mantine/core@7.4.0 @mantine/dates@7.4.0 @mantine/hooks@7.4.0 @rjsf/core @tabler/icons-react dayjs react @aokiapp/rjsf-mantine-theme
 ```
 
 ## Usage
@@ -34,6 +34,9 @@ yarn add @mantine/core@7.4.0 @mantine/dates@7.4.0 @mantine/hooks@7.4.0 @rjsf/cor
 ```js
 import { MantineProvider } from '@mantine/core';
 import Form from '@aokiapp/rjsf-mantine-theme';
+import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css'; // add only if you use MantineDateWidget
+import '@mantine/dropzone/styles.css'; // add only if you use mantine-corparate and FileWidget
 
 render(
   <MantineProvider>
@@ -48,6 +51,9 @@ or with a custom theme:
 ```js
 import { withTheme } from '@rjsf/core';
 import { Theme as MantineTheme } from '@aokiapp/rjsf-mantine-theme';
+import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css'; // if you use MantineDateWidget
+import '@mantine/dropzone/styles.css'; // if you use mantine-corparate and FileWidget
 
 // Make modifications to the theme with your own fields and widgets
 
