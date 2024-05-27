@@ -13,6 +13,7 @@ import RangeWidget from './RangeWidget';
 import RatingWidget from './RatingWidget';
 import FileWidget from './FileWidget';
 import UpDownWidget from './UpDownWidget';
+import NullWidget from './NullWidget';
 
 export function generateWidgets<
   T = any,
@@ -33,6 +34,7 @@ export function generateWidgets<
     RatingWidget,
     FileWidget,
     UpDownWidget,
+    NullWidget,
   };
 }
 

@@ -13,6 +13,7 @@ import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import { useState } from 'react';
 import classes from './ArrayFieldTemplate.module.css';
 import { IconCopy, IconTrash } from '@tabler/icons-react';
+import ArrayFieldItemTemplate from './ArrayFieldItemTemplate'; // do not use getTemplate here
 
 /** The `ArrayFieldTemplate` component is the template used to render all items in an array.
  *
@@ -40,11 +41,6 @@ export default function ArrayFieldTemplate<
   const uiOptions = getUiOptions<T, S, F>(uiSchema);
   const ArrayFieldDescriptionTemplate = getTemplate<'ArrayFieldDescriptionTemplate', T, S, F>(
     'ArrayFieldDescriptionTemplate',
-    registry,
-    uiOptions,
-  );
-  const ArrayFieldItemTemplate = getTemplate<'ArrayFieldItemTemplate', T, S, F>(
-    'ArrayFieldItemTemplate',
     registry,
     uiOptions,
   );
@@ -82,6 +78,10 @@ export default function ArrayFieldTemplate<
     </Group>
   );
 
+  const orderable = (uiOptions.orderable ?? false) && !readonly && !disabled;
+  const removable = (uiOptions.removable ?? true) && !readonly && !disabled;
+  const copyable = (uiOptions.copyable ?? false) && !readonly && !disabled;
+
   const [isDragging, setIsDragging] = useState(false);
 
   let arrItems;
@@ -107,7 +107,9 @@ export default function ArrayFieldTemplate<
             {(provided) => (
               <div {...provided.droppableProps} ref={provided.innerRef}>
                 {items.map(({ key, ...itemProps }: ArrayFieldTemplateItemType<T, S, F>) => {
-                  return <ArrayFieldItemTemplate key={key} {...itemProps} />;
+                  return (
+                    <ArrayFieldItemTemplate key={key} {...itemProps} orderable={orderable} removable={!!removable} />
+                  );
                 })}
                 {provided.placeholder}
               </div>
@@ -115,10 +117,10 @@ export default function ArrayFieldTemplate<
           </Droppable>
           {items[0].hasToolbar && isDragging && (
             <Group m='sm'>
-              {items[0].hasCopy && (
+              {copyable && (
                 <DropToAction icon={<IconCopy />} label='コピー' className={classes.dropToCopy} droppableId='copy' />
               )}
-              {items[0].hasRemove && (
+              {removable && (
                 <DropToAction icon={<IconTrash />} label='削除' className={classes.dropToRemove} droppableId='remove' />
               )}
             </Group>

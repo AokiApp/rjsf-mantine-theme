@@ -35,7 +35,10 @@ export default function MantineDateTimeWidget<
     autofocus,
     rawErrors,
     hideError,
+    options,
+    schema,
   } = props;
+  const description = options.description || schema.description;
 
   // TODO: options
   const inputValue = value ? new Date(value) : null;
@@ -57,6 +60,7 @@ export default function MantineDateTimeWidget<
       error={createErrors<T>(rawErrors, hideError)}
       aria-describedby={ariaDescribedByIds<T>(id)}
       className='armt-widget-datetime-mt'
+      description={description}
     />
   );
 }

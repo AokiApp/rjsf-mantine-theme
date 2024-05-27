@@ -94,6 +94,7 @@ export default function CheckboxesWidget<
               disabled={disabled || readonly || (enumDisabled ?? []).includes(index)}
               name={id}
               aria-describedby={ariaDescribedByIds<T>(id)}
+              description={option.schema?.description}
             />
           );
         })}

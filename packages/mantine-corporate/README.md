@@ -15,7 +15,12 @@ npm run start
 
 ## Installation
 
-replace module name from @aokiapp/rjsf-mantine-theme
+replace module name from `@aokiapp/rjsf-mantine-theme` to `@aokiapp/mantine-theme-corporate`
+
+If you use `FileWidget` you need to install `@mantine/dropzone` as well, and make sure to `import '@mantine/dropzone/styles.css';` in your project.
+
+
+```bash
 
 ## License
 

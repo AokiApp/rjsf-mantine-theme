@@ -1,5 +1,5 @@
 import { ChangeEvent, FocusEvent, useCallback } from 'react';
-import { TextInput } from '@mantine/core';
+import { PasswordInput, TextInput } from '@mantine/core';
 
 import {
   ariaDescribedByIds,
@@ -74,9 +74,10 @@ export default function BaseInputTemplate<
     [onFocus, id],
   );
 
+  const InputComponent = type === 'password' ? PasswordInput : TextInput;
   return (
     <>
-      <TextInput
+      <InputComponent
         key={id}
         id={id}
         placeholder={placeholder}

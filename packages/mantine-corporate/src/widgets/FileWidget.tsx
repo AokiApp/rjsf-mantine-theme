@@ -10,7 +10,6 @@ import {
 } from '@rjsf/utils';
 import { Badge, Card, Group, Text, Image, Box, AspectRatio, CloseButton, Stack } from '@mantine/core';
 import { Dropzone, FileWithPath } from '@mantine/dropzone';
-import '@mantine/dropzone/styles.css';
 import {
   IconCode,
   IconFile,

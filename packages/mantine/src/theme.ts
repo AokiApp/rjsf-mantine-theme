@@ -2,6 +2,7 @@ import { ThemeProps } from '@rjsf/core';
 
 import { generateTemplates } from './templates';
 import { generateWidgets } from './widgets';
+import { generateFields } from './fields';
 import { FormContextType, RJSFSchema, StrictRJSFSchema } from '@rjsf/utils';
 
 export function generateTheme<
@@ -12,6 +13,7 @@ export function generateTheme<
   return {
     templates: generateTemplates<T, S, F>(),
     widgets: generateWidgets<T, S, F>(),
+    fields: generateFields<T, S, F>(),
   };
 }
 

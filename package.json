@@ -62,5 +62,6 @@
     "rollup-plugin-esbuild": "^6.1.1",
     "rollup-plugin-postcss": "^4.0.2",
     "typescript": "^5.3.3"
-  }
+  },
+  "packageManager": "npm@9.6.6+sha1.553376bb7b5de4b1cf2b5f3471f674b678c7e14d"
 }

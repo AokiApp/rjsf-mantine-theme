@@ -37,6 +37,7 @@ export default function MantineDateWidget<
     rawErrors,
     uiSchema,
     hideError,
+    schema,
   } = props;
 
   const options = getUiOptions<T, S, F>(uiSchema);
@@ -48,6 +49,8 @@ export default function MantineDateWidget<
     (value: Date | null) => onChange(value ? fromUtcTimeToRawDateStr(value) : undefined),
     [onChange],
   );
+
+  const description = options.description || schema.description;
   return (
     <DatePickerInput
       value={inputValue}
@@ -64,6 +67,7 @@ export default function MantineDateWidget<
       aria-describedby={ariaDescribedByIds<T>(id)}
       {...(options.props as Record<string, unknown>)}
       className='armt-widget-date-mt'
+      description={description}
     />
   );
 }
