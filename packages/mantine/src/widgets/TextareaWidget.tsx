@@ -35,7 +35,9 @@ export default function TextareaWidget<
     options,
     rawErrors,
     hideError,
+    schema,
   } = props;
+  const description = options.description || schema.description;
 
   const _onChange = ({ target: { value } }: ChangeEvent<HTMLTextAreaElement>) =>
     onChange && onChange(value === '' ? options.emptyValue : value);
@@ -59,6 +61,7 @@ export default function TextareaWidget<
       onBlur={_onBlur}
       onFocus={_onFocus}
       aria-describedby={ariaDescribedByIds<T>(id)}
+      description={description}
     />
   );
 }

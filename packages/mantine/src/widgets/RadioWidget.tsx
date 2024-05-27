@@ -10,9 +10,8 @@ import {
   labelValue,
 } from '@rjsf/utils';
 
-import { Group, Radio } from '@mantine/core';
+import { Flex, Radio } from '@mantine/core';
 import { createErrors } from '../utils/createErrors';
-import { useFieldContext } from '../templates/FieldTemplate';
 
 /** The `RadioWidget` is a widget for rendering a radio group.
  *  It is typically used with a string property constrained with enum options.
@@ -36,8 +35,9 @@ export default function RadioWidget<T = any, S extends StrictRJSFSchema = RJSFSc
     options,
     rawErrors,
     hideError,
+    schema,
   } = props;
-  const { enumOptions, enumDisabled, emptyValue } = options;
+  const { enumOptions, enumDisabled, emptyValue, inline } = options;
   const _onChange = (nextValue: any) => {
     onChange(enumOptionsValueForIndex<S>(nextValue, enumOptions, emptyValue));
   };
@@ -45,7 +45,7 @@ export default function RadioWidget<T = any, S extends StrictRJSFSchema = RJSFSc
   const _onBlur = () => onBlur(id, value);
   const _onFocus = () => onFocus(id, value);
 
-  const { description } = useFieldContext();
+  const description = options.description || schema.description;
   return (
     <Radio.Group
       name={id}
@@ -59,7 +59,7 @@ export default function RadioWidget<T = any, S extends StrictRJSFSchema = RJSFSc
       error={createErrors<T>(rawErrors, hideError)}
       className='armt-widget-radio'
     >
-      <Group>
+      <Flex direction={inline ? 'row' : 'column'} m='xs' gap='sm'>
         {enumOptions?.map((option, index) => {
           const itemDisabled = enumDisabled && enumDisabled.indexOf(option.value) !== -1;
           return (
@@ -71,10 +71,11 @@ export default function RadioWidget<T = any, S extends StrictRJSFSchema = RJSFSc
               key={index}
               disabled={disabled || itemDisabled || readonly}
               aria-describedby={ariaDescribedByIds<T>(id)}
+              description={option.schema?.description}
             />
           );
         })}
-      </Group>
+      </Flex>
     </Radio.Group>
   );
 }
