@@ -12,10 +12,17 @@ export default function ArrayFieldItemTemplate<
   T = any,
   S extends StrictRJSFSchema = RJSFSchema,
   F extends FormContextType = any,
->(props: ArrayFieldTemplateItemType<T, S, F>) {
-  const { children, className, disabled, hasToolbar, index, readonly } = props;
-  const isDraggable = !disabled && !readonly && hasToolbar;
+>(
+  props: ArrayFieldTemplateItemType<T, S, F> & {
+    orderable?: boolean;
+    removable?: boolean;
+  },
+) {
+  const { children, className, disabled, index, readonly, orderable, removable, registry, uiSchema, onDropIndexClick } =
+    props;
+  const isDraggable = !disabled && !readonly && orderable;
   const key = useId();
+  const { RemoveButton } = registry.templates.ButtonTemplates;
   return (
     <Draggable index={index} draggableId={key} key={key} isDragDisabled={!isDraggable}>
       {(provided) => (
@@ -25,11 +32,19 @@ export default function ArrayFieldItemTemplate<
           className={`armt-template-arrayfielditem ${className}`}
         >
           <Group style={{ flexGrow: 1 }} gap={0}>
-            {isDraggable && (
+            {isDraggable ? (
               <div {...provided.dragHandleProps} className={classes.dragHandle}>
                 <IconGripVertical style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
               </div>
-            )}
+            ) : removable ? (
+              <RemoveButton
+                className='armt-template-afit-remove'
+                disabled={disabled || readonly}
+                onClick={onDropIndexClick(index)}
+                uiSchema={uiSchema}
+                registry={registry}
+              />
+            ) : null}
             <Box style={{ flexGrow: 1 }}>{children}</Box>
           </Group>
         </Box>
