@@ -10,9 +10,6 @@
     transform: rotate(180deg);
   }
 }
-.labels {
-  flex-wrap: nowrap;
-}
 .root {
   border-radius: 8px;
   padding: 8px;

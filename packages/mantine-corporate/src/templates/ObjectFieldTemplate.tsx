@@ -61,7 +61,7 @@ export default function ObjectFieldTemplate<
   const containError = errorSchema && Object.keys(errorSchema).length > 0;
 
   const legendInner = (
-    <Group className={classes.labels} gap='xs'>
+    <Group gap='xs'>
       {title && (
         <TitleFieldTemplate
           id={titleId<T>(idSchema)}
@@ -104,9 +104,9 @@ export default function ObjectFieldTemplate<
   // default setting is uncollapsable
   if (options.collapsable) {
     const legendNode = showLegend ? (
-      <Group onClick={toggle} className={classes.legend} justify='space-between' wrap='nowrap'>
+      <Group onClick={toggle} justify='space-between' wrap='nowrap'>
         {legendInner}
-        <IconChevronUp />
+        <IconChevronUp size='1rem' />
       </Group>
     ) : null;
     return (
@@ -123,11 +123,7 @@ export default function ObjectFieldTemplate<
       </Stack>
     );
   } else {
-    const legendNode = showLegend ? (
-      <Group className={classes.legend} gap='xs'>
-        {legendInner}
-      </Group>
-    ) : null;
+    const legendNode = showLegend ? legendInner : null;
     return (
       <Stack
         id={idSchema.$id}
