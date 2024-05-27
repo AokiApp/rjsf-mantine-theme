@@ -60,54 +60,84 @@ export default function ObjectFieldTemplate<
   const classNames = options.classNames;
   const containError = errorSchema && Object.keys(errorSchema).length > 0;
 
-  const legendNode = showLegend ? (
-    <Group onClick={toggle} className={classes.legend} justify='space-between' wrap='nowrap'>
-      <Group className={classes.labels} gap='xs'>
-        {title && (
-          <TitleFieldTemplate
-            id={titleId<T>(idSchema)}
-            title={title}
-            required={required}
-            schema={schema}
-            uiSchema={uiSchema}
-            registry={registry}
-          />
-        )}
-        {description && (
-          <DescriptionFieldTemplate
-            id={descriptionId<T>(idSchema)}
-            description={description}
-            schema={schema}
-            uiSchema={uiSchema}
-            registry={registry}
-          />
-        )}
-      </Group>
-      <IconChevronUp />
+  const legendInner = (
+    <Group className={classes.labels} gap='xs'>
+      {title && (
+        <TitleFieldTemplate
+          id={titleId<T>(idSchema)}
+          title={title}
+          required={required}
+          schema={schema}
+          uiSchema={uiSchema}
+          registry={registry}
+        />
+      )}
+      {description && (
+        <DescriptionFieldTemplate
+          id={descriptionId<T>(idSchema)}
+          description={description}
+          schema={schema}
+          uiSchema={uiSchema}
+          registry={registry}
+        />
+      )}
     </Group>
-  ) : null;
-  return (
-    <Stack
-      id={idSchema.$id}
-      role='group'
-      gap={'xs'}
-      className={`armt-template-objectfield ${classNames ?? ''} ${classes.root} ${containError && classes.error}`}
-    >
-      {legendNode}
-      <Collapse in={opened} className={classes.collapse}>
-        <Box className='armt-template-objectfield-item'>
-          {properties.map((prop: ObjectFieldTemplatePropertyType) => prop.content)}
-        </Box>
-        {canExpand<T, S, F>(schema, uiSchema, formData) && (
-          <AddButton
-            className='object-property-expand'
-            onClick={onAddClick(schema)}
-            disabled={disabled || readonly}
-            uiSchema={uiSchema}
-            registry={registry}
-          />
-        )}
-      </Collapse>
-    </Stack>
   );
+
+  const contentInner = (
+    <>
+      <Box className='armt-template-objectfield-item'>
+        {properties.map((prop: ObjectFieldTemplatePropertyType) => prop.content)}
+      </Box>
+      {canExpand<T, S, F>(schema, uiSchema, formData) && (
+        <AddButton
+          className='object-property-expand'
+          onClick={onAddClick(schema)}
+          disabled={disabled || readonly}
+          uiSchema={uiSchema}
+          registry={registry}
+        />
+      )}
+    </>
+  );
+
+  // default setting is uncollapsable
+  if (options.collapsable) {
+    const legendNode = showLegend ? (
+      <Group onClick={toggle} className={classes.legend} justify='space-between' wrap='nowrap'>
+        {legendInner}
+        <IconChevronUp />
+      </Group>
+    ) : null;
+    return (
+      <Stack
+        id={idSchema.$id}
+        role='group'
+        gap={'xs'}
+        className={`armt-template-objectfield ${classNames ?? ''} ${classes.root} ${containError && classes.error}`}
+      >
+        {legendNode}
+        <Collapse in={opened} className={classes.collapse}>
+          {contentInner}
+        </Collapse>
+      </Stack>
+    );
+  } else {
+    const legendNode = showLegend ? (
+      <Group className={classes.legend} gap='xs'>
+        {legendInner}
+      </Group>
+    ) : null;
+    return (
+      <Stack
+        id={idSchema.$id}
+        role='group'
+        gap={'xs'}
+        className={`armt-template-objectfield ${classNames ?? ''} ${classes.root} ${containError && classes.error}`}
+      >
+        {legendNode}
+        {contentInner}
+      </Stack>
+    );
+  }
 }
