@@ -128,7 +128,7 @@ export function Playground() {
     setUiSchemaStr(JSON.stringify(selectedSample.uiSchema, null, 2));
     setFormDataStr(JSON.stringify(selectedSample.formData, null, 2));
   }, [selectedSample]);
-  const changeHdl = (e: string | null) => {
+  const presetChangeHdl = (e: string | null) => {
     if (e === null) {
       return;
     }
@@ -145,7 +145,7 @@ export function Playground() {
       description='Select here to insert'
       data={sectionList}
       value={presetQueryKey}
-      onChange={changeHdl}
+      onChange={presetChangeHdl}
       allowDeselect
       style={{ flexGrow: 1 }}
       searchable
@@ -155,8 +155,12 @@ export function Playground() {
   // Preset area end
 
   // Theme area start
-  const [theme, setTheme] = useState('MantineCorporate');
-
+  const [theme, setTheme] = useState<string | null>(
+    new URLSearchParams(window.location.search).get('theme') || 'Mantine Corporate'
+  );
+  useEffect(() => {
+    setTheme(new URLSearchParams(window.location.search).get('theme'));
+  }, [window.location.search]);
   const themes = [
     { value: 'Mantine', label: 'Mantine' },
     { value: 'MantineCorporate', label: 'Mantine Corporate' },
@@ -177,10 +181,17 @@ export function Playground() {
       FormToUse = MantineForm;
       break;
   }
-
-  const themeSelect = (
-    <Select label='Select theme' data={themes} value={theme} onChange={(value) => setTheme(value || 'Mantine')} />
-  );
+  const themeChangeHdl = (e: string | null) => {
+    if (e === null) {
+      return;
+    }
+    // update the query string
+    const url = new URL(window.location.href);
+    url.searchParams.set('theme', e);
+    window.history.pushState({}, '', url.toString());
+    setTheme(e);
+  };
+  const themeSelect = <Select label='Select theme' data={themes} value={theme} onChange={themeChangeHdl} />;
   // Theme area end
 
   // Validation mode area start
