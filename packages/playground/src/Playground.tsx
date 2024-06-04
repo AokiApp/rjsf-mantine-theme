@@ -1,4 +1,4 @@
-import { Grid, Group, Select, Stack, Switch, JsonInput, Title } from '@mantine/core';
+import { Grid, Group, Select, Stack, Switch, JsonInput, Title, Box, Slider } from '@mantine/core';
 import { IChangeEvent } from '@rjsf/core';
 import MantineForm from '@aokiapp/rjsf-mantine-theme';
 import MantineCorporateForm from '@aokiapp/rjsf-mantine-corporate';
@@ -102,10 +102,6 @@ export function Playground() {
   // Form data area end
 
   // Preset area start
-  const [presetPropValue, setPresetPropValue] = useState<{
-    key: string;
-    value: Sample;
-  } | null>(null);
   const sampleList: Sample[] = [];
   const sectionList = Object.keys(samples).map((key) => {
     return {
@@ -119,19 +115,28 @@ export function Playground() {
       }),
     };
   });
-  const changeHdl = (e: string | null) => {
+
+  const [presetQueryKey, setPresetQueryKey] = useState<string | null>(
+    new URLSearchParams(window.location.search).get('preset')
+  );
+  useEffect(() => {
+    setPresetQueryKey(new URLSearchParams(window.location.search).get('preset'));
+  }, [window.location.search]);
+  const selectedSample = presetQueryKey ? sampleList[parseInt(presetQueryKey)] : sampleList[0];
+  useEffect(() => {
+    setSchemaStr(JSON.stringify(selectedSample.schema, null, 2));
+    setUiSchemaStr(JSON.stringify(selectedSample.uiSchema, null, 2));
+    setFormDataStr(JSON.stringify(selectedSample.formData, null, 2));
+  }, [selectedSample]);
+  const presetChangeHdl = (e: string | null) => {
     if (e === null) {
       return;
     }
-    const sample = sampleList[parseInt(e)];
-    setPresetPropValue({
-      key: e,
-      value: sample,
-    });
-
-    setSchemaStr(JSON.stringify(sample.schema, null, 2));
-    setUiSchemaStr(JSON.stringify(sample.uiSchema, null, 2));
-    setFormDataStr(JSON.stringify(sample.formData, null, 2));
+    // update the query string
+    const url = new URL(window.location.href);
+    url.searchParams.set('preset', e);
+    window.history.pushState({}, '', url.toString());
+    setPresetQueryKey(e);
   };
 
   const preset = (
@@ -139,8 +144,8 @@ export function Playground() {
       label='Preset'
       description='Select here to insert'
       data={sectionList}
-      value={presetPropValue?.key}
-      onChange={changeHdl}
+      value={presetQueryKey}
+      onChange={presetChangeHdl}
       allowDeselect
       style={{ flexGrow: 1 }}
       searchable
@@ -150,8 +155,12 @@ export function Playground() {
   // Preset area end
 
   // Theme area start
-  const [theme, setTheme] = useState('MantineCorporate');
-
+  const [theme, setTheme] = useState<string | null>(
+    new URLSearchParams(window.location.search).get('theme') || 'Mantine Corporate'
+  );
+  useEffect(() => {
+    setTheme(new URLSearchParams(window.location.search).get('theme'));
+  }, [window.location.search]);
   const themes = [
     { value: 'Mantine', label: 'Mantine' },
     { value: 'MantineCorporate', label: 'Mantine Corporate' },
@@ -172,10 +181,17 @@ export function Playground() {
       FormToUse = MantineForm;
       break;
   }
-
-  const themeSelect = (
-    <Select label='Select theme' data={themes} value={theme} onChange={(value) => setTheme(value || 'Mantine')} />
-  );
+  const themeChangeHdl = (e: string | null) => {
+    if (e === null) {
+      return;
+    }
+    // update the query string
+    const url = new URL(window.location.href);
+    url.searchParams.set('theme', e);
+    window.history.pushState({}, '', url.toString());
+    setTheme(e);
+  };
+  const themeSelect = <Select label='Select theme' data={themes} value={theme} onChange={themeChangeHdl} />;
   // Theme area end
 
   // Validation mode area start
@@ -194,30 +210,51 @@ export function Playground() {
   );
   // Validation mode area end
 
-  // Form area start
+  // right pane start
   const synthesizedProps = {
-    ...presetPropValue?.value,
+    ...selectedSample,
     schema: schemaSnapshot,
     uiSchema: uiSchemaSnapshot,
     formData: formDataSnapshot,
     fields: {
       geo: GeoPosition,
       '/schemas/specialString': SpecialInput,
-      ...presetPropValue?.value?.fields,
+      ...selectedSample.fields,
     },
   };
-  const formRendered = (
-    <FormToUse
-      {...synthesizedProps}
-      noHtml5Validate={noHtml5Validate}
-      liveValidate={liveValidate}
-      onChange={(e: IChangeEvent) => {
-        setFormDataStr(JSON.stringify(e.formData, null, 2));
-      }}
-      validator={validator}
-    />
+  const rightPane = (
+    <Stack>
+      <Box p={'sm'}>{selectedSample.description}</Box>
+      <FormToUse
+        {...synthesizedProps}
+        noHtml5Validate={noHtml5Validate}
+        liveValidate={liveValidate}
+        onChange={(e: IChangeEvent) => {
+          setFormDataStr(JSON.stringify(e.formData, null, 2));
+        }}
+        validator={validator}
+        transformErrors={(errors) => {
+          console.debug('validation result', errors);
+          return errors;
+        }}
+      />
+    </Stack>
   );
-  // Form area end
+  // right pane end
+
+  // left pane start
+  const [size, setSize] = useState<number>(1);
+  const sizeSlider = <Slider min={0} max={2} step={1} value={size} onChange={(e) => setSize(e)} />;
+  const leftPane = (
+    <Stack>
+      <Grid>
+        <Grid.Col span={6}>{jsonSchemaForm}</Grid.Col>
+        <Grid.Col span={6}>{uiSchemaForm}</Grid.Col>
+      </Grid>
+      {formData}
+    </Stack>
+  );
+  // left pane end
   return (
     <Stack>
       <Title>react-jsonschema-form x Mantine Playground</Title>
@@ -228,20 +265,19 @@ export function Playground() {
         <Stack>
           {html5ValidationChk}
           {liveValidationChk}
+          {sizeSlider}
         </Stack>
       </Group>
-      <Grid>
-        <Grid.Col span={6}>
-          <Stack>
-            <Grid>
-              <Grid.Col span={6}>{jsonSchemaForm}</Grid.Col>
-              <Grid.Col span={6}>{uiSchemaForm}</Grid.Col>
-            </Grid>
-            {formData}
-          </Stack>
-        </Grid.Col>
-        <Grid.Col span={6}>{formRendered}</Grid.Col>
-      </Grid>
+      {size === 0 ? (
+        <>{leftPane}</>
+      ) : size === 2 ? (
+        <>{rightPane}</>
+      ) : (
+        <Grid>
+          <Grid.Col span={6}>{leftPane}</Grid.Col>
+          <Grid.Col span={6}>{rightPane}</Grid.Col>
+        </Grid>
+      )}
     </Stack>
   );
 }
