@@ -48,20 +48,20 @@ export function ObjectIfThenElse<T>(
   baseProperty: TObject,
   ifCondition: TObject,
   thenProperty: TObject,
-  elseProperty: TObject
+  elseProperty: TObject,
 ): TUnsafe<T>;
 export function ObjectIfThenElse<T>(
   baseProperty: TObject,
   ifCondition: TObject,
   thenProperty: TObject,
-  options: ObjectOptions
+  options: ObjectOptions,
 ): TUnsafe<T>;
 export function ObjectIfThenElse<T>(
   baseProperty: TObject,
   ifCondition: TObject,
   thenProperty: TObject,
   elseProperty: TObject,
-  options: ObjectOptions
+  options: ObjectOptions,
 ): TUnsafe<T>;
 
 export function ObjectIfThenElse<T>(
@@ -69,7 +69,7 @@ export function ObjectIfThenElse<T>(
   ifCondition: TObject,
   thenProperty: TObject,
   _elsePropertyOrObjectOptions?: TObject | ObjectOptions,
-  _options?: ObjectOptions
+  _options?: ObjectOptions,
 ) {
   // normalize parameters
   let elseProperty: TObject | undefined;

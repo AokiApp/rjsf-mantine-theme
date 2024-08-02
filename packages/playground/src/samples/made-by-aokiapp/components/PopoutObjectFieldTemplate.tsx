@@ -21,7 +21,7 @@ import { IconExternalLink } from '@tabler/icons-react';
 export default function PopoutObjectFieldTemplate<
   T = any,
   S extends StrictRJSFSchema = RJSFSchema,
-  F extends FormContextType = any
+  F extends FormContextType = any,
 >(props: ObjectFieldTemplateProps<T, S, F>) {
   const {
     description,
@@ -42,7 +42,7 @@ export default function PopoutObjectFieldTemplate<
   const DescriptionFieldTemplate = getTemplate<'DescriptionFieldTemplate', T, S, F>(
     'DescriptionFieldTemplate',
     registry,
-    options
+    options,
   );
   // Button templates are not overridden in the uiSchema
   const {

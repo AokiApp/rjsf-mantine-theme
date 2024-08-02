@@ -4,7 +4,6 @@ import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/dropzone/styles.css';
 
-
 export default function App() {
   return (
     <MantineProvider>

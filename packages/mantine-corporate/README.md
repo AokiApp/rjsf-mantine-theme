@@ -19,9 +19,9 @@ replace module name from `@aokiapp/rjsf-mantine-theme` to `@aokiapp/mantine-them
 
 If you use `FileWidget` you need to install `@mantine/dropzone` as well, and make sure to `import '@mantine/dropzone/styles.css';` in your project.
 
-
 ```bash
 
 ## License
 
 Apache-2.0
+```

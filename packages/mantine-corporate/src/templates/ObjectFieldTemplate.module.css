@@ -6,7 +6,7 @@
   }
 
   /* if the element next to this has the attribute aria-hidden... */
-  &:has(+ .collapse[aria-hidden="true"]) svg {
+  &:has(+ .collapse[aria-hidden='true']) svg {
     transform: rotate(180deg);
   }
 }
@@ -15,7 +15,7 @@
   padding: 8px;
   user-select: none;
   width: 100%;
-  
+
   border: 1px solid transparent;
 
   & :global(.armt-template-objectfield-item) {
@@ -24,25 +24,27 @@
     gap: 1rem;
   }
   & .root {
-
-     border-color: var(--mantine-color-gray-3);
-     box-shadow: var(--mantine-shadow-md);
-     & .root:not(:focus-within) {
+    border-color: var(--mantine-color-gray-3);
+    box-shadow: var(--mantine-shadow-md);
+    & .root:not(:focus-within) {
       border-color: transparent;
       box-shadow: none;
-     }
+    }
   }
 
   background-color: #fff;
 
-  transition: background-color 200ms ease, margin 200ms ease, box-shadow 200ms ease;
+  transition:
+    background-color 200ms ease,
+    margin 200ms ease,
+    box-shadow 200ms ease;
 
-  &:has(> .collapse[aria-hidden="true"]) {
+  &:has(> .collapse[aria-hidden='true']) {
     background-color: #f2f2f2;
     border: none;
     box-shadow: none;
-    margin-top: -.3rem;
-    margin-bottom: -.3rem;
+    margin-top: -0.3rem;
+    margin-bottom: -0.3rem;
     &.error {
       border: var(--mantine-color-red-6) 1px solid !important;
     }

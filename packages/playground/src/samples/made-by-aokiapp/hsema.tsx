@@ -29,7 +29,7 @@ const userIdentInfo = Type.Object(
       },
       {
         title: '性別',
-      }
+      },
     ),
     birthDate: Type.String({
       title: '生年月日',
@@ -50,7 +50,7 @@ const userIdentInfo = Type.Object(
   {
     title: '',
     $id: '#/definitions/userIdentInfo',
-  }
+  },
 );
 
 const definitions = {
@@ -67,7 +67,7 @@ const subjectEnum = NamedStringEnum(
   },
   {
     title: '受験科目',
-  }
+  },
 );
 const schema = Type.Object(
   {
@@ -95,7 +95,7 @@ const schema = Type.Object(
       {
         title: '管理情報',
         description: '出願に対する管理上の事項です。',
-      }
+      },
     ),
     acceptanceInfo: Type.Object(
       {
@@ -116,13 +116,13 @@ const schema = Type.Object(
           {
             title: '申請状況',
             description: '申請の状況を選択してください。',
-          }
+          },
         ),
       },
       {
         title: '受付情報',
         description: '受付に関する情報です。',
-      }
+      },
     ),
     examinee: Type.Object(
       {
@@ -140,7 +140,7 @@ const schema = Type.Object(
           readOnly: true,
         }),
       },
-      { title: '受験者情報', description: '試験を受ける本人の情報を入力してください' }
+      { title: '受験者情報', description: '試験を受ける本人の情報を入力してください' },
     ),
     applicant: ObjectIfThenElse(
       Type.Object({
@@ -151,7 +151,7 @@ const schema = Type.Object(
           },
           {
             title: '申請者の有無',
-          }
+          },
         ),
       }),
       Type.Object({
@@ -163,7 +163,7 @@ const schema = Type.Object(
       {
         title: '申請者情報',
         description: '本申請書を提出し、連絡や書類の返送を受けるための連絡先を入力してください',
-      }
+      },
     ),
 
     guardian: ObjectIfThenElse(
@@ -174,7 +174,7 @@ const schema = Type.Object(
             sameAsApplicant: '申請者と同じ',
             other: '申請者と異なる',
           },
-          { title: '保護者の有無' }
+          { title: '保護者の有無' },
         ),
       }),
       Type.Object({
@@ -186,7 +186,7 @@ const schema = Type.Object(
       {
         title: '保護者情報',
         description: '保護者または成年後見人の情報を入力してください',
-      }
+      },
     ),
 
     applicationInfo: Type.Object(
@@ -205,7 +205,7 @@ const schema = Type.Object(
         subdepartment: Type.Optional(
           Type.String({
             title: '学科/専攻等名',
-          })
+          }),
         ),
         departmentCode: Type.String({
           title: '学科/専攻等コード',
@@ -221,7 +221,7 @@ const schema = Type.Object(
           {
             title: '入学種別',
             examples: [0],
-          }
+          },
         ),
         enterAt: Type.String({
           title: '入学年月',
@@ -235,7 +235,7 @@ const schema = Type.Object(
       {
         title: '出願情報',
         description: '申請書に記載される出願に関する情報を入力してください。',
-      }
+      },
     ),
     examinationInfo: Type.Object(
       {
@@ -262,13 +262,13 @@ const schema = Type.Object(
             title: '受験科目と問題番号',
             description: '受験する科目と問題番号を入力してください。',
             uniqueItems: true,
-          }
+          },
         ),
       },
       {
         title: '試験情報',
         description: '当日の試験に関する情報を入力してください。',
-      }
+      },
     ),
     handicap: Type.Object(
       {
@@ -276,7 +276,7 @@ const schema = Type.Object(
           Type.Boolean({
             title: '軽症者特例',
             description: '軽症者特例を適用しますか?',
-          })
+          }),
         ),
         vision: Type.Optional(
           NamedStringEnum(
@@ -290,8 +290,8 @@ const schema = Type.Object(
             },
             {
               title: '視覚',
-            }
-          )
+            },
+          ),
         ),
         hearing: Type.Optional(
           NamedStringEnum(
@@ -301,8 +301,8 @@ const schema = Type.Object(
             },
             {
               title: '聴覚',
-            }
-          )
+            },
+          ),
         ),
         physical: Type.Optional(
           NamedStringEnum(
@@ -315,8 +315,8 @@ const schema = Type.Object(
             },
             {
               title: '肢体不自由',
-            }
-          )
+            },
+          ),
         ),
         developmental: Type.Optional(
           NamedStringEnum(
@@ -325,8 +325,8 @@ const schema = Type.Object(
             },
             {
               title: '発達障害',
-            }
-          )
+            },
+          ),
         ),
         needPreExamHelp: Type.Boolean({
           title: '試験前の配慮',
@@ -337,19 +337,19 @@ const schema = Type.Object(
           Type.String({
             title: '障害の特徴に関する自由記述欄',
             description: '障害について記入してください。',
-          })
+          }),
         ),
         helps: Type.Optional(
           Type.String({
             title: '配慮内容に関する自由記述欄',
             description: '配慮内容について記入してください。',
-          })
+          }),
         ),
       },
       {
         title: '配慮の有無',
         description: '受験上の配慮についての情報を入力してください。',
-      }
+      },
     ),
     fee: Type.Object(
       {
@@ -374,13 +374,13 @@ const schema = Type.Object(
           {
             uniqueItems: true,
             title: '特例',
-          }
+          },
         ),
       },
       {
         title: '受験料等',
         description: '受験料等に関する情報を入力してください。',
-      }
+      },
     ),
     delay: ObjectIfThenElse(
       Type.Object({
@@ -406,7 +406,7 @@ const schema = Type.Object(
       }),
       {
         title: '遅延出願',
-      }
+      },
     ),
     memo: Type.Object(
       {
@@ -422,18 +422,18 @@ const schema = Type.Object(
           {
             title: 'メモアイテム',
             description: 'メモのアイテムです。',
-          }
+          },
         ),
       },
       {
         title: 'メモ・申し送り',
         description: '操作者別のメモや申し送りです。',
-      }
+      },
     ),
   },
   {
     definitions,
-  }
+  },
 );
 
 function UserIdentInfoField(props: FieldProps) {

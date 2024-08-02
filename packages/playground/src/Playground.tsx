@@ -36,7 +36,7 @@ export function Playground() {
         maxRows={20}
       />
     ),
-    [schemaStr, schemaFailed]
+    [schemaStr, schemaFailed],
   );
   // JSON Schema area end
 
@@ -66,7 +66,7 @@ export function Playground() {
         maxRows={20}
       />
     ),
-    [uiSchemaStr, uiSchemaFailed]
+    [uiSchemaStr, uiSchemaFailed],
   );
   // UI Schema area end
 
@@ -97,7 +97,7 @@ export function Playground() {
         maxRows={20}
       />
     ),
-    [formDataStr, formDataFailed]
+    [formDataStr, formDataFailed],
   );
   // Form data area end
 
@@ -117,7 +117,7 @@ export function Playground() {
   });
 
   const [presetQueryKey, setPresetQueryKey] = useState<string | null>(
-    new URLSearchParams(window.location.search).get('preset')
+    new URLSearchParams(window.location.search).get('preset'),
   );
   useEffect(() => {
     setPresetQueryKey(new URLSearchParams(window.location.search).get('preset'));
@@ -156,7 +156,7 @@ export function Playground() {
 
   // Theme area start
   const [theme, setTheme] = useState<string | null>(
-    new URLSearchParams(window.location.search).get('theme') || 'Mantine Corporate'
+    new URLSearchParams(window.location.search).get('theme') || 'Mantine Corporate',
   );
   useEffect(() => {
     setTheme(new URLSearchParams(window.location.search).get('theme'));
