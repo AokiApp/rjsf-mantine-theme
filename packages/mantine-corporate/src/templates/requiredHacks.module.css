@@ -4,7 +4,7 @@
     content: '必須';
     display: inline-block;
     font-size: 0.7rem;
-    background-color: #ff7733;
+    background-color: #f35129;
     color: white;
     padding: 0.1em 0.5em;
     border-radius: 0.5em;
@@ -17,12 +17,12 @@
   * so we add a virtual pill with the pseudo element, it's a hack
 */
 :global(.mantine-InputWrapper-required) {
-  color: transparent;
+  color: transparent !important;
   &::after {
     content: '必須';
     display: inline-block;
     font-size: 0.7rem;
-    background-color: #ff7733;
+    background-color: #f35129;
     color: white;
     padding: 0.1em 0.5em;
     border-radius: 0.5em;
