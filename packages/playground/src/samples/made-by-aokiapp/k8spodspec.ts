@@ -15974,7 +15974,7 @@ const k8spodspec: Sample = {
       },
     },
     $ref: '#/definitions/io.k8s.api.core.v1.PodSpec',
-  },
+  } as any, // to avoid non-standard json-schema
   uiSchema: {
     'ui:options': {
       popoutType: 'drawer',
