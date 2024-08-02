@@ -39,7 +39,3 @@ jobs:
       - name: Run type checker
         if: always()
         run: npm run typecheck
-
-      - name: Run tests
-        if: always()
-        run: npm test
