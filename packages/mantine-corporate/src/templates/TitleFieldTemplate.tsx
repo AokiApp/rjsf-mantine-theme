@@ -1,7 +1,6 @@
 import { FormContextType, TitleFieldProps, RJSFSchema, StrictRJSFSchema } from '@rjsf/utils';
 import { Title } from '@mantine/core';
-
-const REQUIRED_FIELD_SYMBOL = '*';
+import classes from './requiredHacks.module.css';
 
 /** The `TitleField` is the template to use to render the title of a field
  *
@@ -29,7 +28,7 @@ export default function TitleField<T = any, S extends StrictRJSFSchema = RJSFSch
       }}
     >
       {title}
-      {required && <span className='required'>{REQUIRED_FIELD_SYMBOL}</span>}
+      {required && <span className={classes.requiredPill} />}
     </Title>
   );
 }

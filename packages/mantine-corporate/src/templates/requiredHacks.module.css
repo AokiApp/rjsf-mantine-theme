@@ -1,0 +1,30 @@
+/** add required pill to required fields that is rendered by rjsf */
+.requiredPill {
+  &::after {
+    content: '必須';
+    display: inline-block;
+    font-size: 0.7rem;
+    background-color: #ff7733;
+    color: white;
+    padding: 0.1em 0.5em;
+    border-radius: 0.5em;
+  }
+}
+
+/**
+  * add required pill to required fields that is rendered by mantine
+  * it is not possible to replace the label or element itself
+  * so we add a virtual pill with the pseudo element, it's a hack
+*/
+:global(.mantine-InputWrapper-required) {
+  color: transparent;
+  &::after {
+    content: '必須';
+    display: inline-block;
+    font-size: 0.7rem;
+    background-color: #ff7733;
+    color: white;
+    padding: 0.1em 0.5em;
+    border-radius: 0.5em;
+  }
+}
