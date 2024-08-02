@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Sample } from '../Sample';
 import { Type } from '@sinclair/typebox';
 import { NamedStringEnum } from './utils';
@@ -13,7 +12,7 @@ const schema = Type.Object(
       Type.String({
         title: 'サブタイトル',
         description: 'サブタイトルをつけると、より一層読み手を惹きつけることができます。',
-      }),
+      })
     ),
     tags: Type.Array(
       Type.String({
@@ -23,7 +22,7 @@ const schema = Type.Object(
         uniqueItems: true,
         title: 'タグ',
         description: 'タグをつけると、検索しやすくなります。',
-      },
+      }
     ),
     body: Type.String({
       title: '本文',
@@ -37,21 +36,21 @@ const schema = Type.Object(
         uniqueItems: true,
         title: '画像',
         description: '本文中に挿入する画像を選択してください。画像は最大10枚まで挿入できます。',
-      },
+      }
     ),
     thumbnail: Type.Optional(
       Type.String({
         title: 'サムネイル',
         description: '設定しない場合は、本文中の最初の画像がサムネイルになります。',
         format: 'data-url',
-      }),
+      })
     ),
     publishedAt: Type.Optional(
       Type.String({
         title: '公開日時',
         description: '設定しない場合は、すぐに公開されます。',
         format: 'date-time',
-      }),
+      })
     ),
     scope: NamedStringEnum(
       {
@@ -63,19 +62,19 @@ const schema = Type.Object(
       {
         title: '公開範囲',
         description: '公開範囲を設定します。',
-      },
+      }
     ),
     price: Type.Optional(
       Type.Number({
         title: '価格',
         description: '価格を設定します。',
         minimum: 0,
-      }),
+      })
     ),
   },
   {
     title: '',
-  },
+  }
 );
 
 const uiSchema = {
