@@ -13,17 +13,9 @@
     "build:ts": "tsc -b",
     "build:bundle": "rollup -c",
     "build": "npm run build:ts && npm run build:bundle",
-    "cs-check": "prettier -l \"{src,test}/**/*.ts?(x)\"",
-    "cs-format": "prettier \"{src,test}/**/*.ts?(x)\" --write",
-    "lint": "eslint src test",
-    "precommit": "lint-staged",
     "test": "jest",
-    "test:update": "jest --u"
-  },
-  "lint-staged": {
-    "{src,test}/**/*.ts?(x)": [
-      "eslint --fix"
-    ]
+    "test:update": "jest --u",
+    "typecheck": "tsc --noEmit"
   },
   "engines": {
     "node": ">=20"
@@ -56,7 +48,6 @@
     "schema",
     "form",
     "react",
-    "material-ui 5",
     "mantine",
     "rjsf-mantine"
   ],

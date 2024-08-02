@@ -5,20 +5,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "cs-check": "prettier -l \"src/**/*.ts?(x)\"",
-    "cs-format": "prettier \"src/**/*.ts?(x)\" --write",
     "build": "rimraf build && cross-env NODE_ENV=production vite build",
-    "lint": "eslint src",
-    "precommit": "lint-staged",
-    "publish-to-gh-pages": "npm run build && gh-pages --dist build/",
-    "publish-to-npm": "npm run build && npm publish",
     "start": "vite --force",
-    "preview": "vite preview"
-  },
-  "lint-staged": {
-    "src/**/*.ts?(x)": [
-      "eslint --fix"
-    ]
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
   },
   "files": [
     "dist",

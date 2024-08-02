@@ -1,0 +1,45 @@
+name: Check
+on:
+  workflow_dispatch:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          # use file .node-version to determine node version
+          node-version-file: .node-version
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run build
+        run: npm run build
+
+      - name: Check format
+        if: always()
+        run: npm run formatcheck
+
+      - name: Check lint
+        if: always()
+        run: npm run lint
+
+      - name: Run type checker
+        if: always()
+        run: npm run typecheck
+
+      - name: Run tests
+        if: always()
+        run: npm test
