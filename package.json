@@ -10,7 +10,10 @@
     "start": "echo 'use \"npm run build\" from main directory and then \"npm start\" in the playground package'",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "typecheck": "lerna run typecheck"
+    "typecheck": "lerna run typecheck",
+    "increase-version": "lerna version",
+    "release": "lerna publish from-package",
+    "ci:release": "npm run build && lerna publish from-package --yes"
   },
   "keywords": [],
   "author": "",

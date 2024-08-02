@@ -1,13 +1,12 @@
-name: Check
+name: Release
 on:
   workflow_dispatch:
   push:
-
-permissions:
-  contents: read
+    branches:
+      - main
 
 jobs:
-  check:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -22,17 +21,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run build
-        run: npm run build
-
-      - name: Check format
-        if: always()
-        run: npm run format:check
-
-      - name: Check lint
-        if: always()
-        run: npm run lint
-
-      - name: Run type checker
-        if: always()
-        run: npm run typecheck
+      - name: Release
+        run: npm run ci:release
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
