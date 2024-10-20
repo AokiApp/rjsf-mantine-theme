@@ -9,7 +9,7 @@ import {
   StrictRJSFSchema,
   WidgetProps,
 } from '@rjsf/utils';
-import { MultiSelect, Select } from '@mantine/core';
+import { MultiSelect, NativeSelect } from '@mantine/core';
 import { createErrors } from '../utils/createErrors';
 import { useFieldContext } from '../templates/FieldTemplate';
 
@@ -84,10 +84,7 @@ function SelectWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extend
     );
   } else {
     return (
-      <Select
-        allowDeselect
-        checkIconPosition='right'
-        clearable={!required}
+      <NativeSelect
         data={(enumOptions || []).map(({ value, label }, i) => {
           const disabled = enumDisabled && enumDisabled.indexOf(value) !== -1;
           return { value: String(i), label, disabled };
@@ -98,11 +95,8 @@ function SelectWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extend
         label={labelValue(label, hideLabel, false)}
         autoFocus={autofocus}
         required={required}
-        searchable
         value={selectedIndices as string | null}
-        onChange={handleChange}
-        onDropdownClose={handleBlur}
-        onDropdownOpen={handleFocus}
+        onChange={(event) => handleChange(event.currentTarget.value)}
         aria-describedby={ariaDescribedByIds<T>(id)}
         placeholder={placeholder}
         className='armt-widget-select armt-widget-select-single'
