@@ -83,22 +83,23 @@ function SelectWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extend
       />
     );
   } else {
+    const valuedData = (enumOptions || []).map(({ value, label }, i) => {
+      const disabled = enumDisabled && enumDisabled.indexOf(value) !== -1;
+      return { value: String(i), label, disabled };
+    });
+    const data = [{ value: '-1', label: placeholder || '' }, ...valuedData];
     return (
       <NativeSelect
-        data={(enumOptions || []).map(({ value, label }, i) => {
-          const disabled = enumDisabled && enumDisabled.indexOf(value) !== -1;
-          return { value: String(i), label, disabled };
-        })}
+        data={data}
         description={description}
         disabled={disabled || readonly}
         error={createErrors<T>(rawErrors, hideError)}
         label={labelValue(label, hideLabel, false)}
         autoFocus={autofocus}
         required={required}
-        value={selectedIndices as string | null}
+        value={selectedIndices ?? '-1'}
         onChange={(event) => handleChange(event.currentTarget.value)}
         aria-describedby={ariaDescribedByIds<T>(id)}
-        placeholder={placeholder}
         className='armt-widget-select armt-widget-select-single'
       />
     );
