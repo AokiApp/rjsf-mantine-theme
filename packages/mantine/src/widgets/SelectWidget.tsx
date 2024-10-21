@@ -99,6 +99,8 @@ function SelectWidget<T = any, S extends StrictRJSFSchema = RJSFSchema, F extend
         required={required}
         value={selectedIndices ?? '-1'}
         onChange={(event) => handleChange(event.currentTarget.value)}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         aria-describedby={ariaDescribedByIds<T>(id)}
         className='armt-widget-select armt-widget-select-single'
       />
