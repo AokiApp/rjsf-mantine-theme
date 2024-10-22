@@ -22,8 +22,8 @@
     "react": "^18.2.0"
   },
   "dependencies": {
-    "@aokiapp/rjsf-mantine-corporate": "^0.4.0",
-    "@aokiapp/rjsf-mantine-theme": "^0.4.0",
+    "@aokiapp/rjsf-mantine-corporate": "^0.6.0",
+    "@aokiapp/rjsf-mantine-theme": "^0.5.0",
     "@babel/runtime": "^7.22.15",
     "@hello-pangea/dnd": "^16.5.0",
     "@mantine/core": "^7.4.0",
